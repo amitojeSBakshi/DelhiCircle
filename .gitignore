@@ -1,0 +1,6 @@
+# This directory is PUBLIC. It holds index.html, .gitignore and .nojekyll only.
+# Never commit the refresh rules, source lists, methodology notes or any personal document here.
+*
+!index.html
+!.nojekyll
+!.gitignore
