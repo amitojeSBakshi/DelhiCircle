@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex,nofollow">
 <meta name="description" content="Delhi Circle - where to be, every day of the week.">
 <meta name="theme-color" content="#fdf9f3">
-<meta name="build" content="20260726-205304-242">
+<meta name="build" content="20260726-223918-8400">
 </head>
 <body><title>Delhi Circle</title>
 
@@ -31,6 +31,7 @@
     --c-social:#26647f;
     --c-outdoors:#2e6b45;
     --c-wellness:#454b9e;
+    --c-food:#a3342b;
 
     --d0:#c2410c; --d1:#3f5f86; --d2:#1f6f62; --d3:#9c3f6b;
     --d4:#a8621b; --d5:#63459b; --d6:#b23a58;
@@ -51,7 +52,7 @@
       --c-games:#f2874f; --c-startup:#8fb0d8; --c-growth:#dd8fb4;
       --c-dance:#5fbfab; --c-ai:#b09ae2; --c-craft:#e0a05c;
       --c-music:#d19ad1; --c-stage:#e8899e; --c-books:#a9c065; --c-speak:#dcb75a;
-      --c-social:#6fb2cf; --c-outdoors:#72bd90; --c-wellness:#9aa2f0;
+      --c-social:#6fb2cf; --c-outdoors:#72bd90; --c-wellness:#9aa2f0; --c-food:#ef8d80;
       --d0:#f2874f; --d1:#8fb0d8; --d2:#5fbfab; --d3:#dd8fb4;
       --d4:#e0a05c; --d5:#b09ae2; --d6:#e8899e;
       --new:#f2874f; --link:#f2874f;
@@ -66,7 +67,7 @@
     --c-games:#f2874f; --c-startup:#8fb0d8; --c-growth:#dd8fb4;
     --c-dance:#5fbfab; --c-ai:#b09ae2; --c-craft:#e0a05c;
     --c-music:#d19ad1; --c-stage:#e8899e; --c-books:#a9c065; --c-speak:#dcb75a;
-    --c-social:#6fb2cf; --c-outdoors:#72bd90; --c-wellness:#9aa2f0;
+    --c-social:#6fb2cf; --c-outdoors:#72bd90; --c-wellness:#9aa2f0; --c-food:#ef8d80;
     --d0:#f2874f; --d1:#8fb0d8; --d2:#5fbfab; --d3:#dd8fb4;
     --d4:#e0a05c; --d5:#b09ae2; --d6:#e8899e;
     --new:#f2874f; --link:#f2874f;
@@ -80,7 +81,7 @@
     --c-games:#c2410c; --c-startup:#3f5f86; --c-growth:#9c3f6b;
     --c-dance:#1f6f62; --c-ai:#63459b; --c-craft:#a8621b;
     --c-music:#8c3a8c; --c-stage:#b23a58; --c-books:#54711f; --c-speak:#8a6512;
-    --c-social:#26647f; --c-outdoors:#2e6b45; --c-wellness:#454b9e;
+    --c-social:#26647f; --c-outdoors:#2e6b45; --c-wellness:#454b9e; --c-food:#a3342b;
     --d0:#c2410c; --d1:#3f5f86; --d2:#1f6f62; --d3:#9c3f6b;
     --d4:#a8621b; --d5:#63459b; --d6:#b23a58;
     --new:#c2410c; --link:#a8360a;
@@ -465,14 +466,15 @@
           <span class="lbl">When</span><span class="val" id="valWhen">—</span><span class="chev"></span>
         </button>
         <div class="dd-menu">
-          <button class="dd-item" type="button" id="wkBtn">First week of August<span class="tick">✓</span></button>
-          <button class="dd-item" type="button" id="monthBtn">Whole of August<span class="tick">✓</span></button>
+          <button class="dd-item" type="button" id="wkBtn">This week<span class="tick">✓</span></button>
+          <button class="dd-item" type="button" id="m30Btn">Next 30 days<span class="tick">✓</span></button>
+          <button class="dd-item" type="button" id="allBtn">Everything ahead<span class="tick">✓</span></button>
           <div class="dd-sep"></div>
           <div class="dd-note">Or pick your own range</div>
           <div class="dd-dates">
-            <input type="date" id="from" value="2026-08-03" aria-label="From date">
+            <input type="date" id="from" value="2026-07-27" aria-label="From date">
             <span style="color:var(--ink-4)">→</span>
-            <input type="date" id="to" value="2026-08-09" aria-label="To date">
+            <input type="date" id="to" value="2028-01-28" aria-label="To date">
           </div>
         </div>
       </div>
@@ -744,6 +746,7 @@
   var TODAY = "2026-07-27";      // refresh marker — bump on every update
   var BASELINE = "2026-07-27";   // initial load; entries from this date are not "new"
   var NEW_WINDOW_DAYS = 3;       // "NEW" badge lifetime after that
+  var HORIZON = "2028-01-28";    // far end of "Everything ahead"
 
   var CATS = [
     {k:"games",    label:"Board games",   tone:"--c-games"},
@@ -758,7 +761,8 @@
     {k:"speak",    label:"Speaking",      tone:"--c-speak"},
     {k:"social",   label:"Social",        tone:"--c-social"},
     {k:"outdoors", label:"Outdoors",      tone:"--c-outdoors"},
-    {k:"wellness", label:"Yoga & sound",  tone:"--c-wellness"}
+    {k:"wellness", label:"Yoga & sound",  tone:"--c-wellness"},
+    {k:"food",     label:"Food & dining", tone:"--c-food"}
   ];
   var CATMAP = {}; CATS.forEach(function(c){ CATMAP[c.k] = c; });
 
@@ -827,6 +831,11 @@
      note:"Volunteer-run open sessions in the parks, free and walk-in with no registration. Turning up at the same patch of Lodhi Garden every morning builds familiarity faster than any ticketed event.",
      cost:"Free", free:true, url:"https://freeyogadelhi.vercel.app/", added:"2026-07-27"},
 
+    {dow:1, a:"multi", cat:"food", name:"Monday Magic Classic",
+     when:"Mondays · 7:00 PM–midnight", where:"Indus Flavour — venue on the listing",
+     note:"₹200 for a Monday night out, which is roughly the price of the auto there. Vegetarian kitchen, and the sort of low-key room where a table of strangers ends up talking.",
+     cost:"₹200", url:"https://allevents.in/new-delhi/food-drinks", added:"2026-07-27"},
+
     /* ================= TUESDAY ================= */
     {dow:2, a:"cp", cat:"speak", name:"Central Delhi Toastmasters",
      when:"Every Tuesday · 6:40–8:45 PM", where:"Conference Hall, YMCA Gate 5, Jai Singh Road",
@@ -890,6 +899,11 @@
      note:"A one-off Sufi evening at one of CP's better-known bars. Worth it as a mid-week night out that does not require leaving the centre.",
      cost:"Ticketed", url:"https://allevents.in/new-delhi/sufi", added:"2026-07-27"},
 
+    {date:"2026-07-29", a:"gurgaon", cat:"stage", name:"Allow Me! — Rahul Dua",
+     when:"Wed 29 Jul · evening", where:"The Laugh Store, DLF Cyber Hub, Gurugram",
+     note:"A full solo hour from one of the more dependable touring comics, in Cyber Hub's dedicated comedy room. Dinner and a dozen bars are downstairs when it finishes.",
+     cost:"Ticketed", url:"https://allevents.in/new-delhi/all", added:"2026-07-27"},
+
     /* ================= THURSDAY ================= */
     {dow:4, a:"southdel", cat:"stage", name:"The Laugh Circuit — Thursday open mic",
      when:"Every Thursday · evening", where:"The Laugh Circuit, Hauz Khas",
@@ -931,6 +945,12 @@
      note:"One of the best-known bhajan and ghazal singers in the country, in Delhi's most serious mid-size auditorium. A weeknight concert that starts early enough to still be a normal evening.",
      cost:"Ticketed", url:"https://allevents.in/new-delhi/concerts", added:"2026-07-27"},
 
+    {date:"2026-08-20", a:"cp", cat:"stage", name:"Jagran Film Festival",
+     when:"Thu 20–Sun 23 Aug · 9:00 AM–10:00 PM", where:"Dr Ambedkar International Centre, Janpath",
+     mt:"Violet · Janpath",
+     note:"Four days of screenings running fourteen hours a day, so you can drop in after work rather than taking leave. Festival crowds talk to each other in queues in a way multiplex crowds never do.",
+     cost:"₹1,000", url:"https://allevents.in/new-delhi/art", added:"2026-07-27"},
+
     /* ================= FRIDAY ================= */
     {date:"2026-08-07", a:"noida", cat:"ai", name:"Hyvä Meetup Delhi 2026",
      when:"Fri 7 Aug · 4:30 PM", where:"Hosted by Webkul, Noida",
@@ -965,6 +985,23 @@
      mt:"Blue + Violet · Mandi House",
      note:"Three hours in the Mandi House theatre district, the night before Independence Day. The area empties into a dozen cafes afterwards, which makes it easy to extend.",
      cost:"Ticketed", url:"https://allevents.in/new-delhi/concerts", added:"2026-07-27"},
+
+    {date:"2026-07-31", a:"cp", cat:"craft", name:"Image Worlds: Hybridity",
+     when:"Fri 31 Jul · 2:00 PM", where:"Kamaladevi Complex, India International Centre, Lodhi Estate",
+     mt:"Yellow · Jor Bagh",
+     note:"A free exhibition at the IIC, which is one of the two or three rooms in Delhi where the audience is the reason to go. Free, so it costs nothing to find out whether that crowd is yours.",
+     cost:"Free", free:true, url:"https://allevents.in/new-delhi/art", added:"2026-07-27"},
+
+    {date:"2026-07-31", a:"multi", cat:"craft", name:"Canvas Painting Date",
+     when:"Fri 31 Jul · evening", where:"Cafe Saka — venue on the listing",
+     note:"A guided painting session on a Friday night instead of a bar. Painting beside someone gives you three hours of company without needing to hold eye contact.",
+     cost:"Ticketed", url:"https://allevents.in/new-delhi/food-drinks", added:"2026-07-27"},
+
+    {date:"2026-08-14", a:"cp", cat:"music", name:"Baithak Live — Akanksha Grover",
+     when:"Fri 14 Aug · 7:00 PM", where:"Talkatora Stadium",
+     mt:"Yellow · Patel Chowk",
+     note:"A baithak format — seated, intimate, close to the performer — staged in a large venue. The night before Independence Day, so the city is already out.",
+     cost:"Ticketed", url:"https://allevents.in/new-delhi/art", added:"2026-07-27"},
 
     /* ================= SATURDAY ================= */
     {dow:6, a:"noida", cat:"startup", name:"eChai Delhi-NCR Startup Meetup",
@@ -1143,6 +1180,70 @@
      note:"A large-format devotional concert in the Talkatora stadium. Go for the scale of the room rather than the intimacy — it is the opposite of the Nizamuddin experience.",
      cost:"Ticketed", url:"https://allevents.in/new-delhi/concerts", added:"2026-07-27"},
 
+    {date:"2026-08-01", a:"gurgaon", cat:"startup", name:"Meet The Founders — Founders Connect",
+     when:"Sat 1 Aug · 11:00 AM–2:00 PM", where:"Beyond Just Work, Gurugram",
+     note:"₹249 for three hours in a room of Gurugram founders. A paid ticket filters for people who actually turn up, which is worth more than a free list of 200 maybes.",
+     cost:"₹249", url:"https://allevents.in/gurgaon/all", added:"2026-07-27"},
+
+    {date:"2026-08-01", a:"noida", cat:"startup", name:"Founder's Meet 7.0 — Noida Edition",
+     when:"Sat 1 Aug · 1:30–5:00 PM", where:"Auditorium, Ofis Square, Noida",
+     note:"The seventh edition, which means the format works and the regulars already know each other. Stacks after the Gurugram morning meet if you are willing to cross the city.",
+     cost:"₹799", url:"https://allevents.in/new-delhi/startup", added:"2026-07-27"},
+
+    {date:"2026-08-01", a:"southdel", cat:"stage", name:"Blunt ft. Onkar",
+     when:"Sat 1 Aug · 8:00 PM", where:"Hideout Comedy Club, Hauz Khas Village",
+     note:"A named set at the Hauz Khas comedy club rather than an open mic, so the material is tighter. The village outside stays open long after it ends.",
+     cost:"Ticketed", url:"https://allevents.in/new-delhi/art", added:"2026-07-27"},
+
+    {date:"2026-08-01", a:"southdel", cat:"craft", name:"Kiss & Paint",
+     when:"Sat 1 Aug", where:"ShellBeacon Cafe, Hauz Khas Village",
+     mt:"Magenta · IIT Delhi",
+     note:"Another painting session at the Hauz Khas cafe that also runs the Saturday board games and trivia. One venue, three different ways to meet the same crowd.",
+     cost:"Ticketed", url:"https://allevents.in/new-delhi/art", added:"2026-07-27"},
+
+    {date:"2026-08-01", a:"westdel", cat:"food", name:"Tiramisu Making Workshop",
+     when:"Sat 1 Aug", where:"Sukoon Coffee Cafe, Dwarka",
+     mt:"Blue · Dwarka Sector 21",
+     note:"₹499 to spend an afternoon making dessert badly alongside other people making it badly. Cooking together collapses the distance faster than a drink does.",
+     cost:"₹499", url:"https://allevents.in/new-delhi/food-drinks", added:"2026-07-27"},
+
+    {date:"2026-08-01", a:"westdel", cat:"food", name:"Toontooni's Table — Modern Bengali Classics",
+     when:"Sat 1 Aug · 1:00–3:00 PM", where:"Monkey Bar, Vasant Kunj",
+     mt:"Magenta · Vasant Vihar",
+     note:"A chef's pop-up at a shared table, which is a format built for talking to whoever sits down next to you. Expensive at ₹3,186 — treat it as a one-off rather than a habit.",
+     cost:"₹3,186", url:"https://allevents.in/new-delhi/food-drinks", added:"2026-07-27"},
+
+    {date:"2026-08-01", a:"gurgaon", cat:"food", name:"Pause — A Mindful Experience",
+     when:"Sat 1 Aug · 12:00–2:00 PM", where:"Masala & Mozzarella, MG Road, Gurugram",
+     note:"A slow, guided lunch built around eating deliberately rather than quickly. Steep at ₹3,500, but it is a genuinely different room from every meetup on this board.",
+     cost:"₹3,500", url:"https://allevents.in/new-delhi/food-drinks", added:"2026-07-27"},
+
+    {date:"2026-08-01", a:"noida", cat:"social", name:"Picnic at Barista Diner",
+     when:"Sat 1 Aug", where:"Barista Diner, Starling Mall, Noida",
+     note:"A daytime picnic-format social in Noida, which is thin ground for this kind of thing. Low cost, low commitment, and easy to leave early.",
+     cost:"Ticketed", url:"https://allevents.in/new-delhi/food-drinks", added:"2026-07-27"},
+
+    {date:"2026-08-08", a:"gurgaon", cat:"food", name:"Alice in Wonderland — Immersive Dining",
+     when:"Sat 8 Aug", where:"StayVista at Moets Palm Villa, Gurugram",
+     note:"Cinematic immersive dining — a themed set-piece dinner rather than a restaurant booking. Novel enough that the table has something to talk about from the first course.",
+     cost:"Ticketed", url:"https://allevents.in/new-delhi/food-drinks", added:"2026-07-27"},
+
+    {date:"2026-08-08", a:"cp", cat:"books", name:"Marham — Poetry & Music: The Journey Within",
+     when:"Sat 8 Aug · 6:30 PM", where:"Aiwan-e-Ghalib Auditorium",
+     mt:"Violet · ITO",
+     note:"Poetry set to live music, in the Ghalib auditorium, starting right as the Sur Aur Sukhan afternoon session ends. Two poetry events back to back in one building.",
+     cost:"Ticketed", url:"https://allevents.in/new-delhi/art", added:"2026-07-27"},
+
+    {date:"2026-08-08", a:"gurgaon", cat:"craft", name:"Moon Lamp Workshop",
+     when:"Sat 8 Aug · 3:00 PM", where:"145 Cafe and Bar, Gurugram",
+     note:"Build a working moon lamp and take it home. A craft session in a bar rather than a studio, so it runs looser and the conversation starts earlier.",
+     cost:"Ticketed", url:"https://allevents.in/new-delhi/art", added:"2026-07-27"},
+
+    {date:"2026-08-15", a:"multi", cat:"books", name:"Kahaaniwala — Live Storytelling",
+     when:"Sat 15 Aug · 4:00 PM", where:"The Social House — venue on the listing",
+     note:"Live storytelling with Ravie Solanky on Independence Day afternoon. A listening-room format, which self-selects for people who will actually talk afterwards.",
+     cost:"Ticketed", url:"https://allevents.in/new-delhi/art", added:"2026-07-27"},
+
     /* ================= SUNDAY ================= */
     {date:"2026-08-09", a:"cp", cat:"outdoors", name:"Delhi Freedom Half Marathon",
      when:"Sun 9 Aug · 5:30–9:30 AM", where:"Jawaharlal Nehru Stadium",
@@ -1220,7 +1321,39 @@
      when:"Sun 30 Aug · 5:00–8:00 AM", where:"Decathlon Sports, Dwarka",
      mt:"Blue · Dwarka Sector 21",
      note:"A 10K rather than a half marathon, which makes it a realistic first organised run. Finishes by eight, so the Sunday survives it.",
-     cost:"₹549–₹799", url:"https://allevents.in/new-delhi/health-wellness", added:"2026-07-27"}
+     cost:"₹549–₹799", url:"https://allevents.in/new-delhi/health-wellness", added:"2026-07-27"},
+
+    {date:"2026-08-02", a:"gurgaon", cat:"food", name:"Mamma Mia — Immersive Dining",
+     when:"Sun 2 Aug · 2:00 PM", where:"StayVista at Moets Palm Villa, Gurugram",
+     note:"A cinematic themed lunch at a villa rather than a restaurant, so the group stays together for hours. The daytime slot leaves the Sunday evening free.",
+     cost:"Ticketed", url:"https://allevents.in/new-delhi/food-drinks", added:"2026-07-27"},
+
+    {date:"2026-08-02", a:"multi", cat:"social", name:"Friendship Day — Food, Pool, Music, Dance",
+     when:"Sun 2 Aug · 11:00 AM–6:00 PM", where:"Traveling Souls — venue on the listing",
+     note:"Seven hours built explicitly around meeting people, which is unusually on the nose for this board. Drop in and leave whenever; nobody is tracking attendance.",
+     cost:"Ticketed", url:"https://allevents.in/new-delhi/food-drinks", added:"2026-07-27"},
+
+    {date:"2026-08-09", a:"gurgaon", cat:"stage", name:"Monster ft. Gurleen Pannu",
+     when:"Sun 9 Aug · 6:00 PM", where:"The Laugh Store, DLF Cyber Hub, Gurugram",
+     note:"An early Sunday set in Cyber Hub's comedy room, done by half past seven. The whole of Cyber Hub is downstairs afterwards if the evening is going well.",
+     cost:"Ticketed", url:"https://allevents.in/new-delhi/art", added:"2026-07-27"},
+
+    {date:"2026-08-16", a:"cp", cat:"stage", name:"Rajkumari — Nayab Midha",
+     when:"Sun 16 Aug · 6:00 PM", where:"Talkatora Stadium",
+     mt:"Yellow · Patel Chowk",
+     note:"A solo staged show at Talkatora on a Sunday evening. Central, easy to reach on the Yellow Line, and finished early enough for a working Monday.",
+     cost:"Ticketed", url:"https://allevents.in/new-delhi/art", added:"2026-07-27"},
+
+    {date:"2026-08-23", a:"cp", cat:"craft", name:"Global Art & Design Education Expo",
+     when:"Sun 23 Aug · 10:30 AM–3:00 PM", where:"Le Méridien New Delhi, Janpath",
+     mt:"Violet · Janpath",
+     note:"Free, and a room full of design schools and practising artists rather than a gallery crowd. Worth a morning purely for who is standing in it.",
+     cost:"Free", free:true, url:"https://allevents.in/new-delhi/art", added:"2026-07-27"},
+
+    {date:"2026-08-23", a:"multi", cat:"music", name:"Ilhaam at Blank Canvas",
+     when:"Sun 23 Aug · 6:15 PM", where:"Blank Canvas — venue on the listing",
+     note:"A small-room music evening rather than an auditorium booking. The kind of gig where the performer talks to the audience between songs.",
+     cost:"Ticketed", url:"https://allevents.in/new-delhi/art", added:"2026-07-27"}
   ];
 
   var CLASSES = [
@@ -1294,6 +1427,7 @@
       String(dt.getDate()).padStart(2,"0");
   }
   function daysBetween(a,b){ return Math.round((d(b) - d(a)) / 86400000); }
+  function addDays(s,n){ var dt = d(s); dt.setDate(dt.getDate()+n); return iso(dt); }
   function isNew(e){
     if (e.added <= BASELINE) return false;   // baseline load is not "new"
     var age = daysBetween(e.added, TODAY);
@@ -1304,15 +1438,25 @@
     var m = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
     return +p[2] + " " + m[+p[1]-1];
   }
-  /* which weekdays occur between two dates (inclusive) */
+  /* which weekdays occur between two dates (inclusive).
+     Stops as soon as all seven are seen — ranges now run to 2028, and walking
+     550 days one at a time to learn "yes, all of them" is pointless. */
   function dowsInRange(from, to){
-    var set = {}, cur = d(from), end = d(to), n = 0;
-    while (cur <= end && n < 400){ set[cur.getDay()] = true; cur.setDate(cur.getDate()+1); n++; }
+    var set = {}, cur = d(from), end = d(to), n = 0, found = 0;
+    while (cur <= end && n < 400){
+      if (!set[cur.getDay()]){ set[cur.getDay()] = true; if (++found === 7) break; }
+      cur.setDate(cur.getDate()+1); n++;
+    }
     return set;
+  }
+  /* the When label: carry the year only when the range straddles two of them */
+  function fmtWhen(a, b){
+    var ya = a.slice(0,4), yb = b.slice(0,4), span = ya !== yb;
+    return fmtAdded(a) + (span ? " " + ya : "") + " – " + fmtAdded(b) + (span ? " " + yb : "");
   }
 
   var state = {area:"all", cat:"all", free:false, onlyNew:false, wknd:false, q:"",
-               from:"2026-08-03", to:"2026-08-09"};
+               from:TODAY, to:HORIZON};
 
   function inRange(e, dows){
     if (e.date) return e.date >= state.from && e.date <= state.to;
@@ -1484,11 +1628,15 @@
   from.addEventListener("change", onDate);
   to.addEventListener("change", onDate);
 
+  function setRange(a, b){ from.value = a; to.value = b; onDate(); }
   document.getElementById("wkBtn").addEventListener("click", function(){
-    from.value = "2026-08-03"; to.value = "2026-08-09"; onDate();
+    setRange(TODAY, addDays(TODAY, 6));
   });
-  document.getElementById("monthBtn").addEventListener("click", function(){
-    from.value = "2026-08-03"; to.value = "2026-08-31"; onDate();
+  document.getElementById("m30Btn").addEventListener("click", function(){
+    setRange(TODAY, addDays(TODAY, 30));
+  });
+  document.getElementById("allBtn").addEventListener("click", function(){
+    setRange(TODAY, HORIZON);
   });
 
   var q = document.getElementById("q");
@@ -1555,7 +1703,7 @@
   }
 
   function syncLabels(){
-    setVal("valWhen", fmtAdded(state.from) + " – " + fmtAdded(state.to), false);
+    setVal("valWhen", fmtWhen(state.from, state.to), false);
     setVal("valWhere",
       state.area === "all" ? "Anywhere" : ((AREAMAP[state.area] || {}).label || state.area),
       state.area !== "all");
