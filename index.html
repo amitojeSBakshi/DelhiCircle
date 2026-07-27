@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex,nofollow">
 <meta name="description" content="Delhi Circle - where to be, every day of the week.">
 <meta name="theme-color" content="#fdf9f3">
-<meta name="build" content="20260727-104821-3465">
+<meta name="build" content="20260727-153401-5251">
 </head>
 <body><title>Delhi Circle</title>
 
@@ -348,13 +348,22 @@
   .go::after{content:" →"}
   .tel{font-size:12.5px; color:var(--ink-3); text-decoration:none}
   .tel:hover{text-decoration:underline; text-underline-offset:3px}
+  /* a pill, so it reads as a control rather than another line of card metadata.
+     Filled-when-on mirrors .tag.isnew, which is the board's existing "this is on" idiom. */
   .save{
-    font-family:var(--sans); font-size:13px; font-weight:700; cursor:pointer;
-    background:none; border:0; padding:0; margin:0; line-height:1.4;
-    color:var(--ink-3); transition:color .12s;
+    font-family:var(--sans); font-size:11.5px; font-weight:700; cursor:pointer;
+    background:none; color:var(--ink-3);
+    border:1.5px solid var(--line); border-radius:999px;
+    padding:3px 11px; line-height:1.4; margin:0;
+    transition:border-color .12s, color .12s, background .12s;
   }
-  .save:hover{color:var(--accent)}
-  .save[aria-pressed="true"]{color:var(--accent)}
+  .save:hover{border-color:var(--accent); color:var(--accent)}
+  .save[aria-pressed="true"]{
+    background:var(--accent); border-color:var(--accent); color:#fff;
+  }
+  @media (prefers-color-scheme:dark){ .save[aria-pressed="true"]{color:#17130f} }
+  :root[data-theme="dark"] .save[aria-pressed="true"]{color:#17130f}
+  :root[data-theme="light"] .save[aria-pressed="true"]{color:#fff}
   .added{
     margin-left:auto; font-size:11.5px; color:var(--ink-4);
     font-variant-numeric:tabular-nums;
@@ -459,6 +468,7 @@
     <div class="perf"></div>
     <nav class="tabs" id="tabs" role="tablist" aria-label="Sections">
       <button class="tab" type="button" role="tab" data-view="week"        aria-selected="true">The week</button>
+      <button class="tab" type="button" role="tab" data-view="saved"       aria-selected="false">Saved<span class="n" id="tabSavedN"></span></button>
       <button class="tab" type="button" role="tab" data-view="classes"     aria-selected="false">Classes</button>
       <button class="tab" type="button" role="tab" data-view="communities" aria-selected="false">Communities to join</button>
       <button class="tab" type="button" role="tab" data-view="follow"      aria-selected="false">Follow &amp; connect</button>
@@ -526,6 +536,21 @@
       <b>Nothing in this range.</b>
       Widen the dates, or clear a filter.
     </div>
+  </div>
+
+  <!-- ============ SAVED ============ -->
+  <div class="view" data-view="saved">
+  <section id="savedSec">
+    <div class="sechead">
+      <h2>Things you saved<span class="rule"></span></h2>
+      <p>Everything you've kept, whatever the date — this list ignores the filters on the week board. Stored in this browser on this device, and shared with nobody.</p>
+    </div>
+    <div class="grid" id="savedGrid"></div>
+    <div class="empty" id="savedEmpty">
+      <b>Nothing saved yet.</b>
+      Hit <b style="font-style:normal;display:inline;font-size:15px">Save</b> on any card and it will be waiting here.
+    </div>
+  </section>
   </div>
 
   <!-- ============ CLASSES & COURSES ============ -->
@@ -1654,13 +1679,30 @@
     document.getElementById("tSaved").textContent = nSaved;
     document.getElementById("tSavedWrap").style.display = nSaved ? "" : "none";
 
+    renderSaved();
     syncLabels();
     writeHash();
   }
 
-  /* one delegated listener: cards are rebuilt as HTML on every render, so
-     per-button listeners would be re-attached constantly */
-  document.getElementById("days").addEventListener("click", function(ev){
+  /* The saved list deliberately ignores the date range and every filter. A saved thing
+     you cannot find because the week moved on would defeat the point of saving it. */
+  function renderSaved(){
+    var items = E.filter(isSaved).sort(function(a, b){
+      var ad = a.date || "", bd = b.date || "";
+      if (ad && bd) return ad < bd ? -1 : (ad > bd ? 1 : 0);
+      if (ad) return -1;                       // dated things first, soonest first
+      if (bd) return 1;
+      var ao = (a.dow === 0 ? 7 : a.dow), bo = (b.dow === 0 ? 7 : b.dow);
+      return ao - bo;                          // then weekly ones, Mon through Sun
+    });
+    document.getElementById("savedGrid").innerHTML = items.map(cardHTML).join("");
+    document.getElementById("savedEmpty").style.display = items.length ? "none" : "block";
+    document.getElementById("tabSavedN").textContent = items.length ? items.length : "";
+  }
+
+  /* Delegated on document, not on #days - the same buttons appear in the Saved tab, and
+     cards are rebuilt as HTML on every render so per-button listeners would not survive. */
+  document.addEventListener("click", function(ev){
     var btn = ev.target.closest && ev.target.closest(".save");
     if (!btn) return;
     toggleSaved(btn.getAttribute("data-k"));
