@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex,nofollow">
 <meta name="description" content="Delhi Circle - where to be, every day of the week.">
 <meta name="theme-color" content="#fdf9f3">
-<meta name="build" content="20260727-102603-3769">
+<meta name="build" content="20260727-104821-3465">
 </head>
 <body><title>Delhi Circle</title>
 
@@ -455,7 +455,7 @@
       id="tWknd">—</b> on Sat &amp; Sun<i>·</i><b id="tCat">—</b> categories<i>·</i><b
       id="tNew" class="hot">—</b> added recently<span id="tSavedWrap" style="display:none"><i>·</i><b
       id="tSaved" class="hot">—</b> saved</span></p>
-    <p class="byline">Managed by <b>Amitoje Singh Bakshi</b><i>·</i><a href="tel:+918287028821">+91 82870 28821</a></p>
+    <p class="byline">Managed by <b>Amitoje Singh Bakshi</b><i>·</i><a href="tel:+918287028821">+91 82870 28821</a><i>·</i><span id="swept"></span></p>
     <div class="perf"></div>
     <nav class="tabs" id="tabs" role="tablist" aria-label="Sections">
       <button class="tab" type="button" role="tab" data-view="week"        aria-selected="true">The week</button>
@@ -480,9 +480,9 @@
           <div class="dd-sep"></div>
           <div class="dd-note">Or pick your own range</div>
           <div class="dd-dates">
-            <input type="date" id="from" value="2026-07-27" aria-label="From date">
+            <input type="date" id="from" aria-label="From date">
             <span style="color:var(--ink-4)">→</span>
-            <input type="date" id="to" value="2028-01-28" aria-label="To date">
+            <input type="date" id="to" aria-label="To date">
           </div>
         </div>
       </div>
@@ -753,10 +753,16 @@
 (function(){
   "use strict";
 
+  /* Two different "todays", and they must stay apart.
+     TODAY is the date of the last sweep. It is manual, and it drives the New badge and
+     the "last swept" stamp - both are facts about the sweep, not about when someone
+     opens the page, so they have to stay deterministic.
+     NOW (below, once iso() exists) is the reader's real date, and it decides what is
+     still ahead of them. That is what stops a link shared in July from still offering
+     you a 29 July show in September. */
   var TODAY = "2026-07-27";      // refresh marker — bump on every update
   var BASELINE = "2026-07-27";   // initial load; entries from this date are not "new"
   var NEW_WINDOW_DAYS = 3;       // "NEW" badge lifetime after that
-  var HORIZON = "2028-01-28";    // far end of "Everything ahead"
 
   var CATS = [
     {k:"games",    label:"Board games",   tone:"--c-games"},
@@ -846,7 +852,18 @@
      note:"₹200 for a Monday night out, which is roughly the price of the auto there. Vegetarian kitchen, and the sort of low-key room where a table of strangers ends up talking.",
      cost:"₹200", url:"https://allevents.in/new-delhi/monday-magic-classic/4100030367824137", added:"2026-07-27"},
 
+    {date:"2026-09-07", a:"westdel", cat:"startup", name:"Big Business, Tech & Entrepreneur Networking",
+     when:"Mon 7 Sep · 6:00–9:00 PM", where:"Food Court, Pacific Mall, Tagore Garden",
+     mt:"Blue · Subhash Nagar",
+     note:"Three hours of open professional networking on a Monday evening, with a free entry tier. Monday is the hardest night to fill in this city, and this is the rare business room that runs on one.",
+     cost:"Free–low", url:"https://allevents.in/new-delhi/new-delhis-big-business-tech-and-entrepreneur-professional-networking-affair/10000140043603187", added:"2026-07-27"},
+
     /* ================= TUESDAY ================= */
+    {dow:2, a:"cp", cat:"music", name:"Tuning Tuesday — Somewhere, CP",
+     when:"Tuesdays · 8:30 PM — check the listing", where:"Somewhere Restaurant & Bar, Middle Circle, Connaught Place",
+     mt:"Blue + Yellow · Rajiv Chowk",
+     note:"₹199 live music on the deadest night of the Delhi week, in the middle of Connaught Place. Same venue, slot and price as the Monday night, which is confirmed weekly.",
+     cost:"₹199", url:"https://www.district.in/events/tuning-tuesday-jun30-2026-buy-tickets", added:"2026-07-27"},
     {dow:2, a:"cp", cat:"speak", name:"Central Delhi Toastmasters",
      when:"Every Tuesday · 6:40–8:45 PM", where:"Conference Hall, YMCA Gate 5, Jai Singh Road",
      mt:"Blue + Yellow · Rajiv Chowk",
@@ -913,6 +930,11 @@
      when:"Wed 29 Jul · evening", where:"The Laugh Store, DLF Cyber Hub, Gurugram",
      note:"A full solo hour from one of the more dependable touring comics, in Cyber Hub's dedicated comedy room. Dinner and a dozen bars are downstairs when it finishes.",
      cost:"Ticketed", url:"https://allevents.in/new-delhi/allow-me-a-standup-comedy-show-by-rahul-dua/3900030045291714", added:"2026-07-27"},
+
+    {date:"2026-09-09", a:"gurgaon", cat:"stage", name:"Pritish Narula Live",
+     when:"Wed 9 Sep · 9:30–10:45 PM", where:"The Laugh Store, DLF Cyber Hub, Gurugram",
+     note:"A late midweek set in Cyber Hub's dedicated comedy room, finishing before eleven. Everything around it is still open when it ends.",
+     cost:"Ticketed", url:"https://allevents.in/new-delhi/pritish-narula-live/3900030418547911", added:"2026-07-27"},
 
     /* ================= THURSDAY ================= */
     {dow:4, a:"southdel", cat:"stage", name:"The Laugh Circuit — Thursday open mic",
@@ -1249,7 +1271,44 @@
      note:"Live storytelling with Ravie Solanky on Independence Day afternoon. A listening-room format, which self-selects for people who will actually talk afterwards.",
      cost:"Ticketed", url:"https://allevents.in/new-delhi/kahaaniwala-live-storytelling-with-ravie-solanky/3900030426443138", added:"2026-07-27"},
 
+    {date:"2026-09-05", a:"cp", cat:"books", name:"Ishq Hai — Priya Malik",
+     when:"Sat 5 Sep · 7:00 PM", where:"Lok Kala Manch, Lodhi Estate",
+     mt:"Violet · Khan Market",
+     note:"Spoken word from one of the best-known poets working in India, in a proper auditorium rather than a cafe corner. A listening room, which self-selects for people who talk afterwards.",
+     cost:"Ticketed", url:"https://allevents.in/new-delhi/ishq-hai-by-priya-malik/3900030273737142", added:"2026-07-27"},
+
+    {date:"2026-09-05", a:"southdel", cat:"stage", name:"AIR 1 — Harshit Mahawar",
+     when:"Sat 5 Sep · 8:00 PM", where:"TOT Studio, South Delhi",
+     mt:"Violet + Pink · Lajpat Nagar",
+     note:"A solo hour in the small South Delhi room that runs comedy most nights. Late enough to stack after something earlier in the day.",
+     cost:"₹399+", url:"https://www.district.in/events/air-1-a-standup-comedy-show-by-harshit-mahawar-sep5-2026-buy-tickets", added:"2026-07-27"},
+
+    {date:"2026-09-12", a:"gurgaon", cat:"stage", name:"Cry Daddy — Anirban Dasgupta",
+     when:"Sat 12 Sep · 7:00–8:30 PM", where:"The Laugh Store, DLF Cyber Hub, Gurugram",
+     note:"One of the drier, more written comics on the circuit. Cyber Hub means dinner and a dozen bars are downstairs when it finishes.",
+     cost:"Ticketed", url:"https://allevents.in/new-delhi/cry-daddy-by-anirban-dasgupta/3900030385486409", added:"2026-07-27"},
+
     /* ================= SUNDAY ================= */
+    {date:"2026-09-06", a:"cp", cat:"outdoors", name:"RedTape 10K Run Delhi 2026",
+     when:"Sun 6 Sep · from 5:00 AM", where:"Jawaharlal Nehru Stadium",
+     mt:"Violet · Jawaharlal Nehru Stadium",
+     note:"A second organised 10K at the stadium with its own Metro station, a month after the Freedom half. Running clubs turn out in groups, so the finish line does the introducing.",
+     cost:"Ticketed", url:"https://allevents.in/new-delhi/redtape-10k-run-delhi-2026/200030278842629", added:"2026-07-27"},
+
+    {date:"2026-09-06", a:"gurgaon", cat:"stage", name:"Naanum Foodie Dhaan — Praveen Kumar",
+     when:"Sun 6 Sep · 5:30–7:10 PM", where:"The Comedy Theatre, Gurugram",
+     note:"An early Sunday set that is done before half past seven, so the evening survives it. Tamil-inflected English comedy, and a different crowd from the Hauz Khas rooms.",
+     cost:"Ticketed", url:"https://allevents.in/new-delhi/naanum-foodie-dhaan-by-praveen-kumar/3900030437503845", added:"2026-07-27"},
+
+    {date:"2026-09-20", a:"southdel", cat:"stage", name:"Shashi Dhiman Live",
+     when:"Sun 20 Sep · 8:00–10:00 PM", where:"Hideout Comedy Club, Hauz Khas Village",
+     note:"A named set at the Hauz Khas club rather than an open mic, so the material is tighter. The village stays open long after it ends.",
+     cost:"Ticketed", url:"https://allevents.in/new-delhi/shashi-dhiman-live/3900030183874201", added:"2026-07-27"},
+
+    {date:"2026-09-20", a:"multi", cat:"wellness", name:"Anhad Naad — The Healing India Tour",
+     when:"Sun 20 Sep · 7:00 PM", where:"Delhi NCR — venue on the listing",
+     note:"A sound-healing concert rather than a class, so you can go once without signing up for a course. From ₹799, and the format suits going alone.",
+     cost:"₹799+", url:"https://www.district.in/events/anhad-naad-the-healing-india-tour-delhi-2026-buy-tickets", added:"2026-07-27"},
     {date:"2026-08-09", a:"cp", cat:"outdoors", name:"Delhi Freedom Half Marathon",
      when:"Sun 9 Aug · 5:30–9:30 AM", where:"Jawaharlal Nehru Stadium",
      mt:"Violet · Jawaharlal Nehru Stadium",
@@ -1434,6 +1493,11 @@
   function daysBetween(a,b){ return Math.round((d(b) - d(a)) / 86400000); }
   function addDays(s,n){ var dt = d(s); dt.setDate(dt.getDate()+n); return iso(dt); }
 
+  /* the reader's real date, read from their browser at load */
+  var NOW = iso(new Date());
+  /* far end of "Everything ahead" — ~18 months out, relative so it never goes stale */
+  var HORIZON = addDays(NOW, 550);
+
   /* ---------------- saved events ----------------
      Saves live in this browser's localStorage and nowhere else. There is no
      account and no server behind this page, so a save cannot travel to anyone
@@ -1481,8 +1545,11 @@
     return fmtAdded(a) + (span ? " " + ya : "") + " – " + fmtAdded(b) + (span ? " " + yb : "");
   }
 
+  /* opens on the coming week — a 550-day default piles every Saturday between now and
+     2028 into one column, which is not what this view is shaped for */
+  var DEF_FROM = NOW, DEF_TO = addDays(NOW, 6);
   var state = {area:"all", cat:"all", free:false, onlyNew:false, wknd:false,
-               onlySaved:false, q:"", from:TODAY, to:HORIZON};
+               onlySaved:false, q:"", from:DEF_FROM, to:DEF_TO};
 
   function inRange(e, dows){
     if (e.date) return e.date >= state.from && e.date <= state.to;
@@ -1588,6 +1655,7 @@
     document.getElementById("tSavedWrap").style.display = nSaved ? "" : "none";
 
     syncLabels();
+    writeHash();
   }
 
   /* one delegated listener: cards are rebuilt as HTML on every render, so
@@ -1674,15 +1742,16 @@
   from.addEventListener("change", onDate);
   to.addEventListener("change", onDate);
 
+  /* every preset anchors on NOW, never on the sweep date */
   function setRange(a, b){ from.value = a; to.value = b; onDate(); }
   document.getElementById("wkBtn").addEventListener("click", function(){
-    setRange(TODAY, addDays(TODAY, 6));
+    setRange(NOW, addDays(NOW, 6));
   });
   document.getElementById("m30Btn").addEventListener("click", function(){
-    setRange(TODAY, addDays(TODAY, 30));
+    setRange(NOW, addDays(NOW, 30));
   });
   document.getElementById("allBtn").addEventListener("click", function(){
-    setRange(TODAY, HORIZON);
+    setRange(NOW, HORIZON);
   });
 
   var q = document.getElementById("q");
@@ -1789,6 +1858,87 @@
     render();
   });
 
+  /* ---------------- shareable filter state ----------------
+     The filters live in the URL hash, so "the board, filtered to Gurugram board games"
+     is a link you can send rather than three dropdowns you have to describe.
+     Only non-default values are written, so an untouched board has a clean URL. */
+  function writeHash(){
+    var p = [], show = [];
+    if (state.area !== "all") p.push("area=" + state.area);
+    if (state.cat  !== "all") p.push("cat="  + state.cat);
+    if (state.onlySaved) show.push("saved");
+    if (state.onlyNew)   show.push("new");
+    if (state.free)      show.push("free");
+    if (state.wknd)      show.push("wknd");
+    if (show.length) p.push("show=" + show.join(","));
+    if (state.q)     p.push("q=" + encodeURIComponent(state.q));
+    if (state.from !== DEF_FROM) p.push("from=" + state.from);
+    if (state.to   !== DEF_TO)   p.push("to="   + state.to);
+    var h = p.length ? "#" + p.join("&") : "";
+    if (h !== location.hash) {
+      /* replaceState, not a hash assignment: every filter click should not become a
+         separate back-button step, and replaceState does not re-fire hashchange */
+      history.replaceState(null, "", location.pathname + location.search + h);
+    }
+  }
+
+  var ISO_RE = /^\d{4}-\d{2}-\d{2}$/;
+  function readHash(){
+    var h = location.hash.replace(/^#/, "");
+    /* A hash describes the WHOLE view, not a patch on the current one. Reset first, or
+       following one shared link after another silently keeps the earlier filters - and
+       an unrecognised key would leave the reader looking at someone else's board. */
+    state.area = "all"; state.cat = "all";
+    state.free = false; state.onlyNew = false; state.wknd = false; state.onlySaved = false;
+    state.q = ""; state.from = DEF_FROM; state.to = DEF_TO;
+    if (!h) return false;
+    var got = false;
+    h.split("&").forEach(function(kv){
+      var i = kv.indexOf("="); if (i < 0) return;
+      var k = kv.slice(0, i), v = decodeURIComponent(kv.slice(i + 1));
+      /* validate against the real maps - a stale or mistyped link should fall back to
+         the normal board, never render an empty one with no explanation */
+      if      (k === "area" && (v === "all" || AREAMAP[v])) { state.area = v; got = true; }
+      else if (k === "cat"  && (v === "all" || CATMAP[v]))  { state.cat  = v; got = true; }
+      else if (k === "show"){
+        v.split(",").forEach(function(s){
+          if (s === "saved") state.onlySaved = true;
+          if (s === "new")   state.onlyNew   = true;
+          if (s === "free")  state.free      = true;
+          if (s === "wknd")  state.wknd      = true;
+        });
+        got = true;
+      }
+      else if (k === "q") { state.q = v.trim().toLowerCase(); got = true; }
+      else if (k === "from" && ISO_RE.test(v)) { state.from = v; got = true; }
+      else if (k === "to"   && ISO_RE.test(v)) { state.to   = v; got = true; }
+    });
+    if (state.to < state.from) state.to = state.from;
+    return got;
+  }
+
+  /* push whatever state we ended up with back onto the controls */
+  function applyStateToUI(){
+    Array.prototype.slice.call(document.querySelectorAll("[data-area]")).forEach(function(b){
+      b.setAttribute("aria-pressed", String(b.getAttribute("data-area") === state.area));
+    });
+    Array.prototype.slice.call(document.querySelectorAll("[data-cat]")).forEach(function(b){
+      b.setAttribute("aria-pressed", String(b.getAttribute("data-cat") === state.cat));
+    });
+    document.getElementById("savedBtn").setAttribute("aria-pressed", String(state.onlySaved));
+    document.getElementById("newBtn").setAttribute("aria-pressed",   String(state.onlyNew));
+    document.getElementById("freeBtn").setAttribute("aria-pressed",  String(state.free));
+    document.getElementById("wkndBtn").setAttribute("aria-pressed",  String(state.wknd));
+    q.value    = state.q;
+    from.value = state.from;
+    to.value   = state.to;
+  }
+
+  /* someone pasting a different hash, or arriving from an external link */
+  window.addEventListener("hashchange", function(){
+    readHash(); applyStateToUI(); render();
+  });
+
   /* ---------------- section tabs ---------------- */
   var tabs  = Array.prototype.slice.call(document.querySelectorAll(".tab"));
   var views = Array.prototype.slice.call(document.querySelectorAll(".view"));
@@ -1806,6 +1956,18 @@
     });
   });
 
+  /* ---------------- boot ---------------- */
+  /* How fresh is this board? Says so plainly, and admits it when it has been a while -
+     a shared link with no date on it gives a reader no way to judge it. */
+  (function(){
+    var age = daysBetween(TODAY, NOW);
+    var txt = "last swept " + fmtAdded(TODAY);
+    if (age >= 14) txt += " — " + Math.floor(age / 7) + " weeks ago";
+    document.getElementById("swept").textContent = txt;
+  })();
+
+  readHash();          // a shared link wins over the defaults
+  applyStateToUI();    // then the controls are made to match whatever we ended up with
   render();
 })();
 </script>
