@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex,nofollow">
 <meta name="description" content="Delhi Circle - where to be, every day of the week.">
 <meta name="theme-color" content="#fdf9f3">
-<meta name="build" content="20260727-153401-5251">
+<meta name="build" content="20260728-130353-2786">
 </head>
 <body><title>Delhi Circle</title>
 
@@ -780,7 +780,7 @@
 
   /* Two different "todays", and they must stay apart.
      TODAY is the date of the last sweep. It is manual, and it drives the New badge and
-     the "last swept" stamp - both are facts about the sweep, not about when someone
+     the "last updated" stamp - both are facts about the sweep, not about when someone
      opens the page, so they have to stay deterministic.
      NOW (below, once iso() exists) is the reader's real date, and it decides what is
      still ahead of them. That is what stops a link shared in July from still offering
@@ -2003,7 +2003,7 @@
      a shared link with no date on it gives a reader no way to judge it. */
   (function(){
     var age = daysBetween(TODAY, NOW);
-    var txt = "last swept " + fmtAdded(TODAY);
+    var txt = "last updated " + fmtAdded(TODAY);
     if (age >= 14) txt += " — " + Math.floor(age / 7) + " weeks ago";
     document.getElementById("swept").textContent = txt;
   })();
