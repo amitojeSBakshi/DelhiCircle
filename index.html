@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex,nofollow">
 <meta name="description" content="Delhi Circle - where to be, every day of the week.">
 <meta name="theme-color" content="#fdf9f3">
-<meta name="build" content="20260728-194641-1610">
+<meta name="build" content="20260728-201239-8449">
 </head>
 <body><title>Delhi Circle</title>
 
@@ -486,6 +486,8 @@
         <div class="dd-menu">
           <button class="dd-item" type="button" id="wkBtn">This week<span class="tick">✓</span></button>
           <button class="dd-item" type="button" id="m30Btn">Next 30 days<span class="tick">✓</span></button>
+          <button class="dd-item" type="button" id="thisMonBtn">This month<span class="tick">✓</span></button>
+          <button class="dd-item" type="button" id="nextMonBtn">Next month<span class="tick">✓</span></button>
           <button class="dd-item" type="button" id="allBtn">Everything ahead<span class="tick">✓</span></button>
           <div class="dd-sep"></div>
           <div class="dd-note">Or pick your own range</div>
@@ -1665,7 +1667,9 @@
   /* opens on the coming week — a 550-day default piles every Saturday between now and
      2028 into one column, which is not what this view is shaped for */
   var DEF_FROM = NOW, DEF_TO = addDays(NOW, 6);
-  var state = {area:"all", cat:"all", free:false, onlyNew:false, wknd:false,
+  /* cats is a list, not a single value - "board games AND startup" is a normal thing to
+     want to ask for. Empty list means no type filter at all. */
+  var state = {area:"all", cats:[], free:false, onlyNew:false, wknd:false,
                onlySaved:false, q:"", from:DEF_FROM, to:DEF_TO};
 
   function inRange(e, dows){
@@ -1674,7 +1678,7 @@
   }
   function matches(e){
     if (state.area !== "all" && e.a !== state.area) return false;
-    if (state.cat !== "all" && e.cat !== state.cat) return false;
+    if (state.cats.length && state.cats.indexOf(e.cat) === -1) return false;
     if (state.free && !e.free) return false;
     if (state.onlyNew && !isNew(e)) return false;
     if (state.onlySaved && !isSaved(e)) return false;
@@ -1803,6 +1807,8 @@
 
   /* ---------------- build the What menu ---------------- */
   var catRow = document.getElementById("catRow");
+  catRow.appendChild(Object.assign(document.createElement("div"),
+    {className:"dd-note", textContent:"Pick as many types as you like"}));
   var allBtn = document.createElement("button");
   allBtn.className = "dd-item"; allBtn.type = "button";
   allBtn.setAttribute("data-cat","all");
@@ -1851,7 +1857,29 @@
     });
   }
   bindGroup("area","area");
-  bindGroup("cat","cat");
+
+  /* Categories toggle independently, so Where keeps bindGroup and What does not.
+     "Any type of event" is the clear-all, and is lit only when nothing is picked. */
+  function syncCatButtons(){
+    Array.prototype.slice.call(document.querySelectorAll("[data-cat]")).forEach(function(b){
+      var v = b.getAttribute("data-cat");
+      var on = (v === "all") ? (state.cats.length === 0) : (state.cats.indexOf(v) !== -1);
+      b.setAttribute("aria-pressed", String(on));
+    });
+  }
+  Array.prototype.slice.call(document.querySelectorAll("[data-cat]")).forEach(function(b){
+    b.addEventListener("click", function(){
+      var v = b.getAttribute("data-cat");
+      if (v === "all") {
+        state.cats = [];
+      } else {
+        var i = state.cats.indexOf(v);
+        if (i === -1) { state.cats.push(v); } else { state.cats.splice(i, 1); }
+      }
+      syncCatButtons();
+      render();
+    });
+  });
 
   function toggle(id, key){
     var b = document.getElementById(id);
@@ -1886,6 +1914,34 @@
   });
   document.getElementById("allBtn").addEventListener("click", function(){
     setRange(NOW, HORIZON);
+  });
+
+  /* Calendar months, which is how people actually think about "August".
+     offset 0 = the month we are in, 1 = the one after it, and so on.
+     "This month" starts at NOW, never at the 1st - the first half of a month that has
+     already happened is not something anyone wants back on the board. */
+  function monthWindow(offset){
+    var d0 = d(NOW);
+    var first = new Date(d0.getFullYear(), d0.getMonth() + offset, 1);
+    var last  = new Date(d0.getFullYear(), d0.getMonth() + offset + 1, 0); // day 0 = last of prev
+    var from  = (offset === 0) ? NOW : iso(first);
+    return [from, iso(last)];
+  }
+  function monthShort(offset){
+    var d0 = d(NOW);
+    var m = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+    return m[new Date(d0.getFullYear(), d0.getMonth() + offset, 1).getMonth()];
+  }
+  /* name the months on the buttons, so "Next month" is unambiguous in August */
+  document.getElementById("thisMonBtn").innerHTML =
+    "This month · " + monthShort(0) + '<span class="tick">✓</span>';
+  document.getElementById("nextMonBtn").innerHTML =
+    "Next month · " + monthShort(1) + '<span class="tick">✓</span>';
+  document.getElementById("thisMonBtn").addEventListener("click", function(){
+    var r = monthWindow(0); setRange(r[0], r[1]);
+  });
+  document.getElementById("nextMonBtn").addEventListener("click", function(){
+    var r = monthWindow(1); setRange(r[0], r[1]);
   });
 
   var q = document.getElementById("q");
@@ -1930,9 +1986,9 @@
     menu.addEventListener("click", function(ev){ ev.stopPropagation(); });
   });
 
-  /* single-choice menus close on pick; Show stays open so you can stack filters */
+  /* single-choice menus close on pick; What and Show stay open so you can stack filters */
   Array.prototype.slice.call(
-    document.querySelectorAll("#ddWhen .dd-item, #ddWhere .dd-item, #ddWhat .dd-item")
+    document.querySelectorAll("#ddWhen .dd-item, #ddWhere .dd-item")
   ).forEach(function(b){
     b.addEventListener("click", function(){ closeAll(null); });
   });
@@ -1956,9 +2012,16 @@
     setVal("valWhere",
       state.area === "all" ? "Anywhere" : ((AREAMAP[state.area] || {}).label || state.area),
       state.area !== "all");
-    setVal("valWhat",
-      state.cat === "all" ? "Any type" : ((CATMAP[state.cat] || {}).label || state.cat),
-      state.cat !== "all");
+    /* one or two types read better spelled out; beyond that the trigger gets too wide */
+    var catTxt = "Any type";
+    if (state.cats.length === 1) {
+      catTxt = (CATMAP[state.cats[0]] || {}).label || state.cats[0];
+    } else if (state.cats.length === 2) {
+      catTxt = state.cats.map(function(k){ return (CATMAP[k] || {}).label || k; }).join(", ");
+    } else if (state.cats.length > 2) {
+      catTxt = state.cats.length + " types";
+    }
+    setVal("valWhat", catTxt, state.cats.length > 0);
 
     var on = [];
     if (state.onlySaved) on.push("Saved");
@@ -1967,7 +2030,7 @@
     if (state.wknd)      on.push("Sat & Sun");
     setVal("valShow", on.length ? on.join(", ") : "All events", on.length > 0);
 
-    var dirty = state.area !== "all" || state.cat !== "all"
+    var dirty = state.area !== "all" || state.cats.length
              || state.free || state.onlyNew || state.wknd || state.onlySaved || state.q;
     document.getElementById("clearBtn").classList.toggle("show", !!dirty);
   }
@@ -1975,16 +2038,14 @@
   /* ---------------- clear all ---------------- */
   document.getElementById("clearBtn").addEventListener("click", function(){
     /* clears the filters only - it must never wipe what you have saved */
-    state.area = "all"; state.cat = "all";
+    state.area = "all"; state.cats = [];
     state.free = false; state.onlyNew = false; state.wknd = false;
     state.onlySaved = false; state.q = "";
     q.value = "";
     Array.prototype.slice.call(document.querySelectorAll("[data-area]")).forEach(function(b){
       b.setAttribute("aria-pressed", String(b.getAttribute("data-area") === "all"));
     });
-    Array.prototype.slice.call(document.querySelectorAll("[data-cat]")).forEach(function(b){
-      b.setAttribute("aria-pressed", String(b.getAttribute("data-cat") === "all"));
-    });
+    syncCatButtons();
     ["newBtn","freeBtn","wkndBtn","savedBtn"].forEach(function(id){
       document.getElementById(id).setAttribute("aria-pressed","false");
     });
@@ -1999,7 +2060,7 @@
   function writeHash(){
     var p = [], show = [];
     if (state.area !== "all") p.push("area=" + state.area);
-    if (state.cat  !== "all") p.push("cat="  + state.cat);
+    if (state.cats.length)    p.push("cat="  + state.cats.join(","));
     if (state.onlySaved) show.push("saved");
     if (state.onlyNew)   show.push("new");
     if (state.free)      show.push("free");
@@ -2022,7 +2083,7 @@
     /* A hash describes the WHOLE view, not a patch on the current one. Reset first, or
        following one shared link after another silently keeps the earlier filters - and
        an unrecognised key would leave the reader looking at someone else's board. */
-    state.area = "all"; state.cat = "all";
+    state.area = "all"; state.cats = [];
     state.free = false; state.onlyNew = false; state.wknd = false; state.onlySaved = false;
     state.q = ""; state.from = DEF_FROM; state.to = DEF_TO;
     if (!h) return false;
@@ -2033,7 +2094,12 @@
       /* validate against the real maps - a stale or mistyped link should fall back to
          the normal board, never render an empty one with no explanation */
       if      (k === "area" && (v === "all" || AREAMAP[v])) { state.area = v; got = true; }
-      else if (k === "cat"  && (v === "all" || CATMAP[v]))  { state.cat  = v; got = true; }
+      else if (k === "cat") {
+        /* keep only the ones that still exist - a link written before a category was
+           renamed should degrade to the rest, not to an empty board */
+        state.cats = v.split(",").filter(function(c){ return CATMAP[c]; });
+        got = true;
+      }
       else if (k === "show"){
         v.split(",").forEach(function(s){
           if (s === "saved") state.onlySaved = true;
@@ -2056,9 +2122,7 @@
     Array.prototype.slice.call(document.querySelectorAll("[data-area]")).forEach(function(b){
       b.setAttribute("aria-pressed", String(b.getAttribute("data-area") === state.area));
     });
-    Array.prototype.slice.call(document.querySelectorAll("[data-cat]")).forEach(function(b){
-      b.setAttribute("aria-pressed", String(b.getAttribute("data-cat") === state.cat));
-    });
+    syncCatButtons();
     document.getElementById("savedBtn").setAttribute("aria-pressed", String(state.onlySaved));
     document.getElementById("newBtn").setAttribute("aria-pressed",   String(state.onlyNew));
     document.getElementById("freeBtn").setAttribute("aria-pressed",  String(state.free));
