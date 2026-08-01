@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex,nofollow">
 <meta name="description" content="Delhi Circle - where to be, every day of the week.">
 <meta name="theme-color" content="#fdf9f3">
-<meta name="build" content="20260728-201239-8449">
+<meta name="build" content="20260801-155947-1000">
 </head>
 <body><title>Delhi Circle</title>
 
@@ -20,7 +20,7 @@
 
     --c-games:#c2410c;
     --c-startup:#3f5f86;
-    --c-growth:#9c3f6b;
+    --c-expo:#9c3f6b;
     --c-dance:#1f6f62;
     --c-ai:#63459b;
     --c-craft:#a8621b;
@@ -49,7 +49,7 @@
       --accent:#f2874f;
       --shadow:0 1px 2px #0006, 0 4px 14px #0004;
       --shadow-lg:0 6px 14px #0007, 0 18px 40px #0006;
-      --c-games:#f2874f; --c-startup:#8fb0d8; --c-growth:#dd8fb4;
+      --c-games:#f2874f; --c-startup:#8fb0d8; --c-expo:#dd8fb4;
       --c-dance:#5fbfab; --c-ai:#b09ae2; --c-craft:#e0a05c;
       --c-music:#d19ad1; --c-stage:#e8899e; --c-books:#a9c065; --c-speak:#dcb75a;
       --c-social:#6fb2cf; --c-outdoors:#72bd90; --c-wellness:#9aa2f0; --c-food:#ef8d80;
@@ -64,7 +64,7 @@
     --accent:#f2874f;
     --shadow:0 1px 2px #0006, 0 4px 14px #0004;
     --shadow-lg:0 6px 14px #0007, 0 18px 40px #0006;
-    --c-games:#f2874f; --c-startup:#8fb0d8; --c-growth:#dd8fb4;
+    --c-games:#f2874f; --c-startup:#8fb0d8; --c-expo:#dd8fb4;
     --c-dance:#5fbfab; --c-ai:#b09ae2; --c-craft:#e0a05c;
     --c-music:#d19ad1; --c-stage:#e8899e; --c-books:#a9c065; --c-speak:#dcb75a;
     --c-social:#6fb2cf; --c-outdoors:#72bd90; --c-wellness:#9aa2f0; --c-food:#ef8d80;
@@ -78,7 +78,7 @@
     --accent:#c2410c;
     --shadow:0 1px 2px #231d1708, 0 4px 14px #231d170d;
     --shadow-lg:0 6px 14px #231d1712, 0 18px 40px #231d1718;
-    --c-games:#c2410c; --c-startup:#3f5f86; --c-growth:#9c3f6b;
+    --c-games:#c2410c; --c-startup:#3f5f86; --c-expo:#9c3f6b;
     --c-dance:#1f6f62; --c-ai:#63459b; --c-craft:#a8621b;
     --c-music:#8c3a8c; --c-stage:#b23a58; --c-books:#54711f; --c-speak:#8a6512;
     --c-social:#26647f; --c-outdoors:#2e6b45; --c-wellness:#454b9e; --c-food:#a3342b;
@@ -788,14 +788,14 @@
      NOW (below, once iso() exists) is the reader's real date, and it decides what is
      still ahead of them. That is what stops a link shared in July from still offering
      you a 29 July show in September. */
-  var TODAY = "2026-07-28";      // refresh marker — bump on every update
+  var TODAY = "2026-08-01";      // refresh marker — bump on every update
   var BASELINE = "2026-07-27";   // initial load; entries from this date are not "new"
   var NEW_WINDOW_DAYS = 3;       // "NEW" badge lifetime after that
 
   var CATS = [
     {k:"games",    label:"Board games",   tone:"--c-games"},
-    {k:"startup",  label:"Startup",       tone:"--c-startup"},
-    {k:"growth",   label:"Business",      tone:"--c-growth"},
+    {k:"startup",  label:"Startup & business", tone:"--c-startup"},
+    {k:"expo",     label:"Expos & fairs", tone:"--c-expo"},
     {k:"dance",    label:"Dance socials", tone:"--c-dance"},
     {k:"ai",       label:"AI & tech",     tone:"--c-ai"},
     {k:"craft",    label:"Arts & craft",  tone:"--c-craft"},
@@ -813,6 +813,7 @@
   /* areas — each one carries at least three real venues on this board */
   var AREAS = [
     {k:"cp",       label:"Connaught Place & Central Delhi"},
+    {k:"northdel", label:"North Delhi (Civil Lines, Rohini)"},
     {k:"southdel", label:"South Delhi"},
     {k:"westdel",  label:"West & South-West Delhi"},
     {k:"gurgaon",  label:"Gurugram"},
@@ -825,6 +826,7 @@
      An entry overrides this with mt: when its venue sits closer to another station. */
   var METRO = {
     cp:       "Blue + Yellow · Rajiv Chowk",
+    northdel: "Yellow · Civil Lines / Rohini West",
     southdel: "Yellow + Magenta · Hauz Khas",
     westdel:  "Blue · Dwarka / Rajouri Garden",
     gurgaon:  "Yellow · MG Road / IFFCO Chowk",
@@ -918,7 +920,39 @@
      note:"A partner social is the fastest way to have thirty short conversations in an evening without needing anything to say. Beginners are expected and get partnered up.",
      cost:"Often free", free:true, url:"https://www.salsavida.com/event/india/new-delhi/street-of-salsa/", added:"2026-07-27"},
 
+    {date:"2026-08-11", a:"gurgaon", cat:"stage", name:"Kal Ki Chinta Nahi Karta — Ravi Gupta",
+     when:"Tue 11 Aug · 7:00–8:30 PM", where:"The Laugh Store, DLF Cyber Hub, Gurugram",
+     note:"A full solo on a Tuesday, which barely happens in this city. Done by half eight, with all of Cyber Hub open afterwards.",
+     cost:"Ticketed", url:"https://allevents.in/new-delhi/kal-ki-chinta-nahi-karta-ftravi-gupta/3900030385594654", added:"2026-08-01"},
+
+    {date:"2026-08-11", a:"multi", cat:"expo", name:"Future Defence Conclave 2026",
+     when:"Tue 11–Wed 12 Aug · 8:30 AM–5:30 PM", where:"New Delhi — venue on the listing",
+     note:"A serious defence-industry conclave, and priced like one. Listed because it is a genuinely different professional room, not because it is cheap.",
+     cost:"USD 54–748", url:"https://allevents.in/new-delhi/future-defence-conclave-2026/100001979009311123", added:"2026-08-01"},
+
+    {date:"2026-09-22", a:"westdel", cat:"expo", name:"ET Tech Expo — 7th Edition",
+     when:"Tue 22–Thu 24 Sep · 8:30 AM–7:00 PM", where:"Yashobhoomi IICC, Dwarka",
+     mt:"Blue · Yashobhoomi Dwarka Sector 25",
+     note:"Three days of tech industry exhibitors at the Dwarka convention centre. Expo floors are unusually easy to talk to strangers on — everyone is standing about anyway.",
+     cost:"Ticketed", url:"https://allevents.in/new-delhi/7th-edition-et-tech-expo-new-delhi/200030303283240", added:"2026-08-01"},
+
     /* ================= WEDNESDAY ================= */
+    {date:"2026-08-05", a:"cp", cat:"expo", name:"IPCA Electronics Expo 2026",
+     when:"Wed 5–Fri 7 Aug · 10:00 AM–6:00 PM", where:"Bharat Mandapam, Pragati Maidan",
+     mt:"Blue · Supreme Court",
+     note:"Free entry to three days of electronics manufacturing exhibitors. Free, central and on a weekday, which makes it a cheap way to spend an evening among working professionals.",
+     cost:"Free", free:true, url:"https://allevents.in/new-delhi/ipca-electronics-expo-2026-tickets/80003723251930", added:"2026-08-01"},
+
+    {date:"2026-08-05", a:"northdel", cat:"craft", name:"Teej Baazar Exhibition",
+     when:"Wed 5 Aug · 10:00 AM–8:00 PM", where:"Agarwal Bhawan, Prashant Vihar, Rohini",
+     mt:"Red · Rohini West",
+     note:"A Teej craft and textile bazaar in Rohini, which is a part of the city this board barely reaches. Ten hours, so you can drop in after work.",
+     cost:"Ticketed", url:"https://allevents.in/new-delhi/teej-baazar-exhibition/200030060442152", added:"2026-08-01"},
+
+    {date:"2026-08-19", a:"noida", cat:"stage", name:"Rahul Dua Live",
+     when:"Wed 19 Aug · evening", where:"The Laugh Casa, Rcube Monad Mall, Noida",
+     note:"A midweek solo in Noida rather than Gurugram, which is rare — the comedy circuit leans heavily west. Worth it if Noida is your side of the river.",
+     cost:"Ticketed", url:"https://allevents.in/new-delhi/rahul-dua-live-a-stand-up-comedy-show/3900030462180413", added:"2026-08-01"},
     {dow:3, a:"gurgaon", cat:"dance", name:"Argentine Tango — Museo Camera",
      when:"Every Wednesday · 6:30–8:00 PM", where:"Museo Camera, Sector 28, Gurugram",
      mt:"Yellow · IFFCO Chowk",
@@ -1021,7 +1055,47 @@
      note:"Four days of screenings running fourteen hours a day, so you can drop in after work rather than taking leave. Festival crowds talk to each other in queues in a way multiplex crowds never do.",
      cost:"₹1,000", url:"https://allevents.in/new-delhi/jagran-film-festival/4100030429703723", added:"2026-07-27"},
 
+    {date:"2026-08-20", a:"cp", cat:"expo", name:"Delhi Water Expo 2026",
+     when:"Thu 20 Aug", where:"Pragati Maidan",
+     mt:"Blue · Supreme Court",
+     note:"Free entry, and a water and sustainability industry crowd you will not meet anywhere else on this board.",
+     cost:"Free", free:true, url:"https://allevents.in/new-delhi/delhi-water-expo-2026-tickets/80002772100742", added:"2026-08-01"},
+
+    {date:"2026-08-20", a:"cp", cat:"expo", name:"PackPlus 2026",
+     when:"Thu 20–Sat 22 Aug · 8:00 AM–7:00 PM", where:"Pragati Maidan",
+     mt:"Blue · Supreme Court",
+     note:"Packaging and processing industry show running three days. Large, professional and squarely commercial — useful if that is your line of work.",
+     cost:"Ticketed", url:"https://allevents.in/new-delhi/packplus/200030102994023", added:"2026-08-01"},
+
+    {date:"2026-09-17", a:"cp", cat:"expo", name:"Tools & Equipment Expo India",
+     when:"Thu 17–Sat 19 Sep · 10:00 AM–6:00 PM", where:"Bharat Mandapam, Pragati Maidan",
+     mt:"Blue · Supreme Court",
+     note:"Three days of trade exhibitors at Bharat Mandapam. Thursday is the thinnest evening on this board, and expo halls stay open late into it.",
+     cost:"Ticketed", url:"https://allevents.in/new-delhi/tools-and-equipment-expo-india-2026/200030424013454", added:"2026-08-01"},
+
+    {date:"2026-08-06", a:"cp", cat:"expo", name:"India International Footwear Fair",
+     when:"Thu 6–Sat 8 Aug · 10:00 AM–5:00 PM", where:"Bharat Mandapam, Pragati Maidan",
+     mt:"Blue · Supreme Court",
+     note:"Free entry, 200+ exhibitors and 15,000 trade visitors. A genuinely large room of commercial people, at no cost.",
+     cost:"Free", free:true, url:"https://allevents.in/new-delhi/india-international-footwear-fair-iiff-2026-tickets/80001955842481", added:"2026-08-01"},
+
     /* ================= FRIDAY ================= */
+    {date:"2026-08-07", a:"cp", cat:"music", name:"Parampara Series 2026",
+     when:"Fri 7–Sun 9 Aug · 7:00–9:30 PM", where:"Kamani Auditorium, Copernicus Marg",
+     mt:"Blue + Violet · Mandi House",
+     note:"Three consecutive evenings of Indian classical music and dance at Kamani, and free. The best-value cultural booking on this board.",
+     cost:"Free", free:true, url:"https://allevents.in/new-delhi/parampara-series-2026/100001995059629056", added:"2026-08-01"},
+
+    {date:"2026-08-21", a:"cp", cat:"expo", name:"9th International Health & Wellness Expo",
+     when:"Fri 21 Aug · 10:00 AM–6:00 PM", where:"Bharat Mandapam, Pragati Maidan",
+     mt:"Blue · Supreme Court",
+     note:"Free, and a hall full of wellness practitioners — the cheapest way to meet a dozen teachers before committing to any of them.",
+     cost:"Free", free:true, url:"https://allevents.in/new-delhi/9th-international-health-and-wellness-expo-2026-leading-event-in-delhi/100001990368699359", added:"2026-08-01"},
+
+    {date:"2026-08-28", a:"gurgaon", cat:"stage", name:"Love, Death & Ketchup — Varun Grover, Gurugram",
+     when:"Fri 28 Aug · 6:00 PM", where:"The Laugh Store, DLF Cyber Hub, Gurugram",
+     note:"The Gurugram date of Grover's solo, a day before the Delhi one. Early enough to be a normal Friday evening rather than a late night.",
+     cost:"Ticketed", url:"https://allevents.in/new-delhi/love-death-and-ketchup-by-varun-grover/3900030020763118", added:"2026-08-01"},
     {date:"2026-08-07", a:"noida", cat:"ai", name:"Hyvä Meetup Delhi 2026",
      when:"Fri 7 Aug · 4:30 PM", where:"Hosted by Webkul, Noida",
      note:"A developer meetup around the Hyvä storefront stack, run by Webkul out of their Noida office. Narrow subject, but a genuinely technical room rather than a pitch audience.",
@@ -1127,7 +1201,7 @@
      note:"Thirty engineers deep into search infrastructure. Go for the crowd rather than the topic — it is the most senior engineering room of the week.",
      cost:"Free", free:true, url:"https://www.meetup.com/opensearch-project-delhi/events/315678288/", added:"2026-07-27"},
 
-    {date:"2026-08-08", a:"multi", cat:"growth", name:"Deep Dive into Insurance Management",
+    {date:"2026-08-08", a:"multi", cat:"startup", name:"Deep Dive into Insurance Management",
      when:"Sat 8 Aug · 6:00–8:30 PM", where:"Starbucks — venue on the listing",
      note:"Free, small and well outside the startup circuit, which is exactly why it is worth an evening. A cafe-sized group makes it hard not to end up talking to someone.",
      cost:"Free", free:true, url:"https://allevents.in/new-delhi/deep-dive-into-insurance-management-tickets/100001375358657769", added:"2026-07-27"},
@@ -1216,11 +1290,11 @@
      note:"Sixty years of Hindi film music from R.D. Burman to Pritam, in an auditorium two minutes from Central Secretariat. An early start that leaves the evening free.",
      cost:"Ticketed", url:"https://allevents.in/new-delhi/zindagi-ga-ke-bitayenge-pancham-se-pritam-tak/3900030409125920", added:"2026-07-27"},
 
-    {date:"2026-08-15", a:"cp", cat:"music", name:"Bhajan Clubbing Live ft. Dhruv & Arjun",
-     when:"Sat 15 Aug · 7:00–9:00 PM", where:"Shah Auditorium, Civil Lines",
+    {date:"2026-08-15", a:"northdel", cat:"music", name:"Bhajan Clubbing Live ft. Dhruv & Arjun",
+     when:"Sat 15 Aug · 6:30–9:30 PM", where:"Shah Auditorium, Civil Lines",
      mt:"Yellow · Civil Lines",
      note:"Devotional music reworked as a club set, on Independence Day evening. An unusual format that draws a much younger crowd than a straight bhajan concert.",
-     cost:"₹499–₹1,499", url:"https://allevents.in/new-delhi/bhajan-clubbing-live-ft-dhruv-and-arjun-the-sukoon-collective-tickets/80001879656526", added:"2026-07-27"},
+     cost:"₹399–₹1,499", url:"https://allevents.in/new-delhi/bhajan-clubbing-live-ft-dhruv-and-arjun-the-sukoon-collective-tickets/80001879656526", added:"2026-07-27"},
 
     {date:"2026-08-22", a:"cp", cat:"music", name:"Rashmeet Kaur Live",
      when:"Sat 22 Aug · 8:00–10:00 PM", where:"Bharat Mandapam, Pragati Maidan",
@@ -1376,7 +1450,98 @@
      note:"Qawwali arranged for a full orchestra, which is a genuinely rare thing to see staged. Expensive, but it is the most ambitious music booking on this board.",
      cost:"₹2,199+", url:"https://allevents.in/gurugram/ruhbaru-orchestral-qawwali-project/4100030238185022", added:"2026-07-28"},
 
+    {date:"2026-08-08", a:"multi", cat:"music", name:"Shubha Mudgal Live",
+     when:"Sat 8 Aug · 6:00–8:00 PM", where:"Tivoli Garden Resort Hotel",
+     note:"One of the most respected Hindustani classical vocalists in the country. A serious listening room, and a completely different crowd from the comedy circuit.",
+     cost:"Ticketed", url:"https://allevents.in/new-delhi/shubha-mudgal-in-new-delhi/3300030416893502", added:"2026-08-01"},
+
+    {date:"2026-08-08", a:"gurgaon", cat:"stage", name:"Appurv Gupta Live",
+     when:"Sat 8 Aug · 6:00–8:00 PM", where:"The Laugh Store, DLF Cyber Hub, Gurugram",
+     note:"An early-evening solo that finishes by eight, so it stacks with dinner rather than replacing it.",
+     cost:"Ticketed", url:"https://allevents.in/new-delhi/appurv-gupta-live/3900030385913915", added:"2026-08-01"},
+
+    {date:"2026-08-22", a:"noida", cat:"stage", name:"Vipul Goyal — Unleashed",
+     when:"Sat 22 Aug · 6:30–8:30 PM", where:"Indira Gandhi Kala Kendra Auditorium, Noida",
+     note:"A proper auditorium show in Noida rather than a club room. Noida gets far less of this than Gurugram does.",
+     cost:"Ticketed", url:"https://allevents.in/new-delhi/vipul-goyal-unleashed/3900030375316719", added:"2026-08-01"},
+
+    {date:"2026-08-22", a:"multi", cat:"music", name:"Shivotsav 2026 — Sawan Musical Baraat",
+     when:"Sat 22 Aug · 5:00–8:30 PM", where:"Yamuna Sports Complex",
+     note:"A Sawan musical procession at ₹499. Loud, communal and completely unlike anything else on this board.",
+     cost:"₹499", url:"https://allevents.in/new-delhi/shivotsav-2026-iss-sawan-shiv-ji-ki-musical-baraat/4100030466819935", added:"2026-08-01"},
+
+    {date:"2026-08-29", a:"gurgaon", cat:"stage", name:"Spoiler Alert — Anshu Mor",
+     when:"Sat 29 Aug · 9:30 PM", where:"The Laugh Store, DLF Cyber Hub, Gurugram",
+     note:"A late set, starting when most shows have finished. Useful as the second half of an evening.",
+     cost:"Ticketed", url:"https://allevents.in/new-delhi/spoiler-alert-a-standup-comedy-solo-by-anshu-mor/3900030386599407", added:"2026-08-01"},
+
+    {date:"2026-08-29", a:"cp", cat:"expo", name:"16th IIPTF 2026",
+     when:"Sat 29–Sun 30 Aug · 9:00 AM–6:00 PM", where:"Hall 6, Bharat Mandapam",
+     mt:"Blue · Supreme Court",
+     note:"A weekend trade fair at Bharat Mandapam, so it does not cost you a working day like most expos do.",
+     cost:"Ticketed", url:"https://allevents.in/new-delhi/16th-iiptf-2026/200030095623417", added:"2026-08-01"},
+
+    {date:"2026-09-26", a:"cp", cat:"expo", name:"International Universities Fair",
+     when:"Sat 26 Sep · 11:00 AM–4:00 PM", where:"Le Méridien New Delhi, Janpath",
+     mt:"Violet · Janpath",
+     note:"Free, and a room of people planning a move abroad — an unusually open-minded crowd to fall into conversation with.",
+     cost:"Free", free:true, url:"https://allevents.in/new-delhi/lci-groups-international-universities-fair-2026-new-delhi/100001991349100766", added:"2026-08-01"},
+
+    {date:"2026-10-03", a:"cp", cat:"music", name:"Gurdas Maan Live",
+     when:"Sat 3 Oct · 7:00–9:00 PM", where:"Plenary Hall, Bharat Mandapam",
+     mt:"Blue · Supreme Court",
+     note:"A Punjabi music institution, in the biggest hall in the city. The kind of night Delhi turns out for in numbers.",
+     cost:"Ticketed", url:"https://allevents.in/new-delhi/gurdas-maan-in-delhi-ncr/3300029508904816", added:"2026-08-01"},
+
+    {date:"2026-10-31", a:"cp", cat:"food", name:"Great India Beer Fest",
+     when:"Sat 31 Oct · 11:00 AM–11:00 PM", where:"Jawaharlal Nehru Stadium",
+     mt:"Violet · Jawaharlal Nehru Stadium",
+     note:"Twelve hours, its own Metro station, and a format built entirely around standing about talking to strangers.",
+     cost:"₹1,500–₹3,000", url:"https://allevents.in/new-delhi/great-india-beer-fest/4100030063827952", added:"2026-08-01"},
+
     /* ================= SUNDAY ================= */
+    {date:"2026-08-02", a:"northdel", cat:"stage", name:"Gaurav Gupta Live",
+     when:"Sun 2 Aug · 5:00 PM", where:"Kedarnath Sahni Auditorium, Civil Lines",
+     mt:"Yellow · Civil Lines",
+     note:"An early Sunday show in an auditorium north of the centre, done well before the evening ends.",
+     cost:"Ticketed", url:"https://allevents.in/new-delhi/gaurav-gupta-live/3900030438433929", added:"2026-08-01"},
+
+    {date:"2026-08-02", a:"gurgaon", cat:"stage", name:"Brocode — The Big Line Up",
+     when:"Sun 2 Aug · 3:00 PM", where:"A DOT by GNH, Gurugram",
+     note:"A multi-comic line-up rather than a single solo, so if one act misses, another lands. Afternoon slot leaves the evening free.",
+     cost:"Ticketed", url:"https://allevents.in/new-delhi/brocode-the-big-line-up-2026/3900030234087013", added:"2026-08-01"},
+
+    {date:"2026-08-30", a:"gurgaon", cat:"stage", name:"Sapan Verma Live",
+     when:"Sun 30 Aug · 6:00–8:00 PM", where:"The Laugh Store, DLF Cyber Hub, Gurugram",
+     note:"One of the more reliably written comics on the circuit, in an early Sunday slot.",
+     cost:"Ticketed", url:"https://allevents.in/new-delhi/sapan-verma-live/3900030216167204", added:"2026-08-01"},
+
+    {date:"2026-09-06", a:"gurgaon", cat:"stage", name:"Silly Papa — Angad Singh Ranyal",
+     when:"Sun 6 Sep · evening", where:"The Laugh Store, DLF Cyber Hub, Gurugram",
+     note:"A full solo from a comic who has been on the circuit long enough to be very good at it.",
+     cost:"Ticketed", url:"https://allevents.in/new-delhi/silly-papa-by-angad-singh-ranyal/3900030456949625", added:"2026-08-01"},
+
+    {date:"2026-09-06", a:"gurgaon", cat:"outdoors", name:"The GOAT Run 2026",
+     when:"Sun 6 Sep · 6:00–10:00 AM", where:"Cyber City, Gurugram",
+     mt:"Yellow · Cyber City",
+     note:"A premium corporate run through Cyber City. Expensive at ₹9,440, but the entry fee means a small, committed field rather than a crowd.",
+     cost:"₹9,440", url:"https://allevents.in/gurugram/the-goat-run-2026/4100030431925726", added:"2026-08-01"},
+
+    {date:"2026-09-27", a:"gurgaon", cat:"outdoors", name:"Elevate Miles — Gurugram Half Marathon",
+     when:"Sun 27 Sep · 5:00–10:00 AM", where:"Urban Akhara, Gurugram",
+     note:"The third Gurugram half of the season, at the end of September. Gives you a full training block from here.",
+     cost:"₹1,000–₹1,800", url:"https://allevents.in/gurugram/elevate-miles-gurugram-half-marathon-2026-tickets/80004562907896", added:"2026-08-01"},
+
+    {date:"2026-08-09", a:"gurgaon", cat:"music", name:"Marcin — Art of Guitar Tour",
+     when:"Sun 9 Aug · 7:00–11:30 PM", where:"Room XO, Gurugram",
+     note:"The Polish fingerstyle guitarist on his India tour. Steeply priced, but a genuinely rare booking rather than a routine gig night.",
+     cost:"₹3,750+", url:"https://allevents.in/gurugram/jameson-ginger-ale-marcin-art-of-guitar-tour/4100030431867115", added:"2026-08-01"},
+
+    {date:"2026-10-20", a:"cp", cat:"music", name:"Sufi Qawwali Night — Fanna-Fi-Allah",
+     when:"Tue 20 Oct · 6:30–9:00 PM", where:"Little Theatre Group Auditorium, Copernicus Marg",
+     mt:"Blue + Violet · Mandi House",
+     note:"One of the foremost traditional qawwali ensembles in the world, 26 years into touring, playing two and a half hours with no fusion. The purest qawwali booking on this board after Nizamuddin itself.",
+     cost:"Ticketed", url:"https://allevents.in/new-delhi/sufi-qawwali-night-with-fanna-fi-allah/3900030397529424", added:"2026-08-01"},
     {date:"2026-08-16", a:"westdel", cat:"music", name:"Papon Live in Concert",
      when:"Sun 16 Aug · 7:00–10:00 PM", where:"Yashobhoomi Convention Centre, Dwarka",
      mt:"Blue · Yashobhoomi Dwarka Sector 25",
@@ -1389,9 +1554,9 @@
      note:"Free, two hours, and a meetup format rather than a talk — so people are there to meet each other. Museo is the best-programmed venue in NCR and this costs nothing to try.",
      cost:"Free", free:true, url:"https://allevents.in/gurugram/photography-museum-meetup-—-gurugram-india/100001994071072256", added:"2026-07-28"},
 
-    {date:"2026-08-30", a:"multi", cat:"startup", name:"Meet The Founders — Delhi",
-     when:"Sun 30 Aug · 11:00 AM–2:00 PM", where:"Delhi — venue on the listing",
-     note:"The Delhi edition of the Gurugram meet, at ₹249. A Sunday late-morning slot, which is the easiest kind of networking to actually turn up to.",
+    {date:"2026-08-22", a:"multi", cat:"startup", name:"Meet The Founders — Delhi",
+     when:"Sat 22 Aug · 11:00 AM–2:00 PM", where:"Delhi — venue on the listing",
+     note:"The Delhi edition of the Gurugram meet, at ₹249. A late-morning slot, which is the easiest kind of networking to actually turn up to.",
      cost:"₹249", url:"https://allevents.in/new-delhi/meet-the-founders-delhi-by-founders-connect-tickets/80001550791350", added:"2026-07-28"},
 
     {date:"2026-09-06", a:"gurgaon", cat:"outdoors", name:"Gurugram Half Marathon — 9th Edition",
@@ -1501,10 +1666,10 @@
      cost:"Varies", url:"https://allevents.in/new-delhi/white-robe-gatherings/3900030046492537", added:"2026-07-27"},
 
     {date:"2026-08-30", a:"westdel", cat:"outdoors", name:"Dwarka 10K Run 2.0",
-     when:"Sun 30 Aug · 5:00–8:00 AM", where:"Decathlon Sports, Dwarka",
+     when:"Sun 30 Aug · 5:00–8:00 AM", where:"Vegas Mall, Dwarka",
      mt:"Blue · Dwarka Sector 21",
      note:"A 10K rather than a half marathon, which makes it a realistic first organised run. Finishes by eight, so the Sunday survives it.",
-     cost:"₹549–₹799", url:"https://allevents.in/new-delhi/dwarka-10k-run-20-tickets/80001330517041", added:"2026-07-27"},
+     cost:"₹599–₹899", url:"https://allevents.in/new-delhi/dwarka-10k-run-20-tickets/80001330517041", added:"2026-07-27"},
 
     {date:"2026-08-02", a:"gurgaon", cat:"food", name:"Mamma Mia — Immersive Dining",
      when:"Sun 2 Aug · 2:00 PM", where:"StayVista at Moets Palm Villa, Gurugram",
@@ -1667,9 +1832,9 @@
   /* opens on the coming week — a 550-day default piles every Saturday between now and
      2028 into one column, which is not what this view is shaped for */
   var DEF_FROM = NOW, DEF_TO = addDays(NOW, 6);
-  /* cats is a list, not a single value - "board games AND startup" is a normal thing to
-     want to ask for. Empty list means no type filter at all. */
-  var state = {area:"all", cats:[], free:false, onlyNew:false, wknd:false,
+  /* areas and cats are lists, not single values - "Gurugram or Noida" and "board games
+     AND startup" are both normal things to want to ask for. Empty list = no filter. */
+  var state = {areas:[], cats:[], free:false, onlyNew:false, wknd:false,
                onlySaved:false, q:"", from:DEF_FROM, to:DEF_TO};
 
   function inRange(e, dows){
@@ -1677,7 +1842,7 @@
     return !!dows[e.dow];
   }
   function matches(e){
-    if (state.area !== "all" && e.a !== state.area) return false;
+    if (state.areas.length && state.areas.indexOf(e.a) === -1) return false;
     if (state.cats.length && state.cats.indexOf(e.cat) === -1) return false;
     if (state.free && !e.free) return false;
     if (state.onlyNew && !isNew(e)) return false;
@@ -1828,6 +1993,8 @@
 
   /* ---------------- build the Where menu ---------------- */
   var areaRow = document.getElementById("areaRow");
+  areaRow.appendChild(Object.assign(document.createElement("div"),
+    {className:"dd-note", textContent:"Pick as many areas as you like"}));
   var anyArea = document.createElement("button");
   anyArea.className = "dd-item"; anyArea.type = "button";
   anyArea.setAttribute("data-area","all");
@@ -1846,40 +2013,36 @@
     areaRow.appendChild(b);
   });
 
-  function bindGroup(attr, key){
-    var btns = Array.prototype.slice.call(document.querySelectorAll("[data-"+attr+"]"));
-    btns.forEach(function(b){
+  /* One helper drives both What and Where: click an "all" pill to clear, click any
+     other to toggle it in or out of the list. Identical shape, so one function. */
+  var multiSyncers = [];
+  function setupMultiSelect(attr, key){
+    function sync(){
+      Array.prototype.slice.call(document.querySelectorAll("[data-"+attr+"]")).forEach(function(b){
+        var v = b.getAttribute("data-"+attr);
+        var on = (v === "all") ? (state[key].length === 0) : (state[key].indexOf(v) !== -1);
+        b.setAttribute("aria-pressed", String(on));
+      });
+    }
+    Array.prototype.slice.call(document.querySelectorAll("[data-"+attr+"]")).forEach(function(b){
       b.addEventListener("click", function(){
-        state[key] = b.getAttribute("data-"+attr);
-        btns.forEach(function(o){ o.setAttribute("aria-pressed", String(o === b)); });
+        var v = b.getAttribute("data-"+attr);
+        if (v === "all") {
+          state[key] = [];
+        } else {
+          var i = state[key].indexOf(v);
+          if (i === -1) { state[key].push(v); } else { state[key].splice(i, 1); }
+        }
+        sync();
         render();
       });
     });
+    multiSyncers.push(sync);
+    return sync;
   }
-  bindGroup("area","area");
-
-  /* Categories toggle independently, so Where keeps bindGroup and What does not.
-     "Any type of event" is the clear-all, and is lit only when nothing is picked. */
-  function syncCatButtons(){
-    Array.prototype.slice.call(document.querySelectorAll("[data-cat]")).forEach(function(b){
-      var v = b.getAttribute("data-cat");
-      var on = (v === "all") ? (state.cats.length === 0) : (state.cats.indexOf(v) !== -1);
-      b.setAttribute("aria-pressed", String(on));
-    });
-  }
-  Array.prototype.slice.call(document.querySelectorAll("[data-cat]")).forEach(function(b){
-    b.addEventListener("click", function(){
-      var v = b.getAttribute("data-cat");
-      if (v === "all") {
-        state.cats = [];
-      } else {
-        var i = state.cats.indexOf(v);
-        if (i === -1) { state.cats.push(v); } else { state.cats.splice(i, 1); }
-      }
-      syncCatButtons();
-      render();
-    });
-  });
+  setupMultiSelect("cat", "cats");
+  setupMultiSelect("area", "areas");
+  function syncMultiSelects(){ multiSyncers.forEach(function(s){ s(); }); }
 
   function toggle(id, key){
     var b = document.getElementById(id);
@@ -1986,9 +2149,9 @@
     menu.addEventListener("click", function(ev){ ev.stopPropagation(); });
   });
 
-  /* single-choice menus close on pick; What and Show stay open so you can stack filters */
+  /* only When closes on pick now - Where, What and Show all stack, so they stay open */
   Array.prototype.slice.call(
-    document.querySelectorAll("#ddWhen .dd-item, #ddWhere .dd-item")
+    document.querySelectorAll("#ddWhen .dd-item")
   ).forEach(function(b){
     b.addEventListener("click", function(){ closeAll(null); });
   });
@@ -2009,9 +2172,14 @@
 
   function syncLabels(){
     setVal("valWhen", fmtWhen(state.from, state.to), false);
-    setVal("valWhere",
-      state.area === "all" ? "Anywhere" : ((AREAMAP[state.area] || {}).label || state.area),
-      state.area !== "all");
+    /* area labels are long, so only one gets spelled out; past that, a count */
+    var areaTxt = "Anywhere";
+    if (state.areas.length === 1) {
+      areaTxt = (AREAMAP[state.areas[0]] || {}).label || state.areas[0];
+    } else if (state.areas.length > 1) {
+      areaTxt = state.areas.length + " areas";
+    }
+    setVal("valWhere", areaTxt, state.areas.length > 0);
     /* one or two types read better spelled out; beyond that the trigger gets too wide */
     var catTxt = "Any type";
     if (state.cats.length === 1) {
@@ -2030,7 +2198,7 @@
     if (state.wknd)      on.push("Sat & Sun");
     setVal("valShow", on.length ? on.join(", ") : "All events", on.length > 0);
 
-    var dirty = state.area !== "all" || state.cats.length
+    var dirty = state.areas.length || state.cats.length
              || state.free || state.onlyNew || state.wknd || state.onlySaved || state.q;
     document.getElementById("clearBtn").classList.toggle("show", !!dirty);
   }
@@ -2038,14 +2206,11 @@
   /* ---------------- clear all ---------------- */
   document.getElementById("clearBtn").addEventListener("click", function(){
     /* clears the filters only - it must never wipe what you have saved */
-    state.area = "all"; state.cats = [];
+    state.areas = []; state.cats = [];
     state.free = false; state.onlyNew = false; state.wknd = false;
     state.onlySaved = false; state.q = "";
     q.value = "";
-    Array.prototype.slice.call(document.querySelectorAll("[data-area]")).forEach(function(b){
-      b.setAttribute("aria-pressed", String(b.getAttribute("data-area") === "all"));
-    });
-    syncCatButtons();
+    syncMultiSelects();
     ["newBtn","freeBtn","wkndBtn","savedBtn"].forEach(function(id){
       document.getElementById(id).setAttribute("aria-pressed","false");
     });
@@ -2059,8 +2224,8 @@
      Only non-default values are written, so an untouched board has a clean URL. */
   function writeHash(){
     var p = [], show = [];
-    if (state.area !== "all") p.push("area=" + state.area);
-    if (state.cats.length)    p.push("cat="  + state.cats.join(","));
+    if (state.areas.length) p.push("area=" + state.areas.join(","));
+    if (state.cats.length)  p.push("cat="  + state.cats.join(","));
     if (state.onlySaved) show.push("saved");
     if (state.onlyNew)   show.push("new");
     if (state.free)      show.push("free");
@@ -2083,7 +2248,7 @@
     /* A hash describes the WHOLE view, not a patch on the current one. Reset first, or
        following one shared link after another silently keeps the earlier filters - and
        an unrecognised key would leave the reader looking at someone else's board. */
-    state.area = "all"; state.cats = [];
+    state.areas = []; state.cats = [];
     state.free = false; state.onlyNew = false; state.wknd = false; state.onlySaved = false;
     state.q = ""; state.from = DEF_FROM; state.to = DEF_TO;
     if (!h) return false;
@@ -2093,7 +2258,10 @@
       var k = kv.slice(0, i), v = decodeURIComponent(kv.slice(i + 1));
       /* validate against the real maps - a stale or mistyped link should fall back to
          the normal board, never render an empty one with no explanation */
-      if      (k === "area" && (v === "all" || AREAMAP[v])) { state.area = v; got = true; }
+      if (k === "area") {
+        state.areas = v.split(",").filter(function(a){ return AREAMAP[a]; });
+        got = true;
+      }
       else if (k === "cat") {
         /* keep only the ones that still exist - a link written before a category was
            renamed should degrade to the rest, not to an empty board */
@@ -2119,10 +2287,7 @@
 
   /* push whatever state we ended up with back onto the controls */
   function applyStateToUI(){
-    Array.prototype.slice.call(document.querySelectorAll("[data-area]")).forEach(function(b){
-      b.setAttribute("aria-pressed", String(b.getAttribute("data-area") === state.area));
-    });
-    syncCatButtons();
+    syncMultiSelects();
     document.getElementById("savedBtn").setAttribute("aria-pressed", String(state.onlySaved));
     document.getElementById("newBtn").setAttribute("aria-pressed",   String(state.onlyNew));
     document.getElementById("freeBtn").setAttribute("aria-pressed",  String(state.free));
