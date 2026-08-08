@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex,nofollow">
 <meta name="description" content="Delhi Circle - where to be, every day of the week.">
 <meta name="theme-color" content="#fdf9f3">
-<meta name="build" content="20260808-073901-9217">
+<meta name="build" content="20260808-190010-2667">
 </head>
 <body><title>Delhi Circle</title>
 
@@ -348,6 +348,9 @@
   .go::after{content:" →"}
   .tel{font-size:12.5px; color:var(--ink-3); text-decoration:none}
   .tel:hover{text-decoration:underline; text-underline-offset:3px}
+  /* Quieter than .go — the ticket link is the card's job, directions are a follow-up. */
+  .map{font-size:12.5px; font-weight:600; color:var(--ink-3); text-decoration:none}
+  .map:hover{color:var(--accent); text-decoration:underline; text-underline-offset:3px}
   /* a pill, so it reads as a control rather than another line of card metadata.
      Filled-when-on mirrors .tag.isnew, which is the board's existing "this is on" idiom. */
   .save{
@@ -788,7 +791,7 @@
      NOW (below, once iso() exists) is the reader's real date, and it decides what is
      still ahead of them. That is what stops a link shared in July from still offering
      you a 29 July show in September. */
-  var TODAY = "2026-08-08";      // refresh marker — bump on every update
+  var TODAY = "2026-08-09";      // refresh marker — bump on every update
   var BASELINE = "2026-07-27";   // initial load; entries from this date are not "new"
   var NEW_WINDOW_DAYS = 3;       // "NEW" badge lifetime after that
 
@@ -1880,8 +1883,33 @@
     return true;
   }
 
+  /* ---------------- directions ----------------
+     Google is handed the venue and works out the origin from the reader's own device,
+     so the board never asks for a location and never stores one. Live traffic and the
+     real route come from their Maps app, which is better than anything this page could
+     estimate on its own.
+
+     The venue strings are written for humans, not geocoders: "TOT Studio — Lajpat Nagar /
+     GK / Defence Colony" names three branches, and a query carrying all three lands
+     nowhere. So cut at the first separator and send the first, most specific fragment.
+     Append the city only when the string doesn't already name one, or Maps drifts to the
+     wrong Nehru Place. */
+  var CITY_WORDS = /delhi|gurugram|gurgaon|noida|ghaziabad|faridabad|ncr/i;
+  /* Some venues are not places you can be routed to: a bare city name, a venue that is
+     only disclosed after you register, or a walking route across half of Old Delhi.
+     Sending those to Maps drops the reader at a city centre and quietly pretends that
+     is the venue — worse than offering nothing. Those cards get no Directions link. */
+  var UNROUTABLE = /^(new\s+)?delhi(\s+ncr)?$|^(south|north|west|east)\s+delhi$|^gurugram$|^gurgaon$|^noida$|^ghaziabad$|^faridabad$|^ncr$|varies|venue shared|venue on|to be announced|rotating|multiple venues|across the city|tombs, gardens/i;
+  function mapQuery(e){
+    var q = String(e.where || "").split(/\s+[\/·]\s+|\s+—\s+/)[0].trim();
+    if (!q || UNROUTABLE.test(q)) return "";
+    if (!CITY_WORDS.test(q)) q += ", Delhi NCR";
+    return "https://www.google.com/maps/dir/?api=1&destination=" + encodeURIComponent(q);
+  }
+
   function cardHTML(e){
     var c = CATMAP[e.cat] || {label:e.cat, tone:"--c-social"};
+    var dir = mapQuery(e);
     var sv = isSaved(e);
     var area = AREAMAP[e.a]
       ? '<span class="tag">' + AREAMAP[e.a].label + '</span>' : '';
@@ -1906,6 +1934,7 @@
       +   '<div class="foot">'
       +     '<span class="cost' + (e.free ? ' is-free' : '') + '">' + e.cost + '</span>'
       +     (e.url ? '<a class="go" href="' + e.url + '">Open</a>' : '')
+      +     (dir ? '<a class="map" href="' + attr(dir) + '" target="_blank" rel="noopener">Directions</a>' : '')
       +     (e.tel ? '<a class="tel" href="tel:' + e.tel + '">' + e.tel.replace("+91","") + '</a>' : '')
       +     '<button class="save" type="button" data-k="' + attr(keyOf(e)) + '"'
       +       ' aria-pressed="' + (sv ? 'true' : 'false') + '">'
