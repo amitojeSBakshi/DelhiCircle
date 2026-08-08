@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex,nofollow">
 <meta name="description" content="Delhi Circle - where to be, every day of the week.">
 <meta name="theme-color" content="#fdf9f3">
-<meta name="build" content="20260808-192245-1139">
+<meta name="build" content="20260808-193202-5317">
 </head>
 <body><title>Delhi Circle</title>
 
@@ -517,6 +517,16 @@
           <div class="dd-note" id="nearNote">Set where you are, and every card shows how far it is.</div>
           <button class="dd-item" type="button" id="locBtn">Use my current location<span class="tick">✓</span></button>
           <button class="dd-item" type="button" id="locClearBtn" hidden>Forget my location<span class="tick">✓</span></button>
+        </div>
+      </div>
+
+      <div class="dd" id="ddPrice">
+        <button class="dd-trigger" type="button" aria-expanded="false" aria-haspopup="true">
+          <span class="lbl">Price</span><span class="val" id="valPrice">Any price</span><span class="chev"></span>
+        </button>
+        <div class="dd-menu" id="priceRow">
+          <div class="dd-note">Based on the cheapest listed ticket. Cards that only say
+            &ldquo;Ticketed&rdquo; carry no price and are hidden by these.</div>
         </div>
       </div>
 
@@ -1957,7 +1967,38 @@
   /* areas and cats are lists, not single values - "Gurugram or Noida" and "board games
      AND startup" are both normal things to want to ask for. Empty list = no filter. */
   var state = {areas:[], cats:[], free:false, onlyNew:false, wknd:false,
-               onlySaved:false, q:"", near:0, from:DEF_FROM, to:DEF_TO};
+               onlySaved:false, q:"", near:0, price:"", from:DEF_FROM, to:DEF_TO};
+
+  /* ---------------- what it costs ----------------
+     The cost strings are written for readers: "₹599–₹1,599", "₹499+", "Free as guest",
+     "Ticketed". Banding them needs a number, so take the FIRST rupee figure in the
+     string — the cheapest ticket, which is what "under ₹500" means to someone deciding
+     whether to go.
+
+     Two things are deliberately NOT parsed:
+       - anything without a ₹. "Ticketed", "Cover charge", "Venue spend", "Varies" carry
+         no number at all, and 59 cards say only "Ticketed". Guessing a band for those
+         would put made-up prices in front of the reader.
+       - foreign currency. "USD 54–748" would otherwise read as ₹54, which is off by a
+         factor of nearly a hundred.
+     Unknown is unknown: those cards drop out of a price band rather than being assumed
+     cheap. The menu says so, because a filter that silently hides a third of the board
+     is worse than one that explains itself. */
+  var PRICE_OPTS = [
+    {k:"u300",  label:"Under ₹300",     lo:0,    hi:299},
+    {k:"u500",  label:"Under ₹500",     lo:0,    hi:499},
+    {k:"u1000", label:"Under ₹1,000",   lo:0,    hi:999},
+    {k:"o1000", label:"₹1,000 and over", lo:1000, hi:Infinity}
+  ];
+  var PRICEMAP = {}; PRICE_OPTS.forEach(function(o){ PRICEMAP[o.k] = o; });
+
+  function priceOf(e){
+    if (e.free) return 0;                       // the board's own free flag wins
+    var s = String(e.cost || "");
+    if (/USD|EUR|\$/i.test(s)) return null;     // not rupees, not comparable
+    var m = s.replace(/,/g, "").match(/₹\s*(\d+)/);
+    return m ? Number(m[1]) : null;
+  }
 
   /* Radii, not travel times. 3 km is "walk or one short auto", 20 km is "most of NCR". */
   var NEAR_OPTS = [
@@ -1980,6 +2021,14 @@
     if (state.wknd){
       var day = e.date ? d(e.date).getDay() : e.dow;
       if (day !== 0 && day !== 6) return false;
+    }
+    if (state.price){
+      var band = PRICEMAP[state.price];
+      if (band){
+        var pr = priceOf(e);
+        /* no listed price cannot claim to be under ₹300 */
+        if (pr === null || pr < band.lo || pr > band.hi) return false;
+      }
     }
     if (state.near && origin){
       var km = distanceKm(e);
@@ -2277,6 +2326,29 @@
   toggle("wkndBtn","wknd");
   toggle("savedBtn","onlySaved");
 
+  /* ---------------- price ----------------
+     One band at a time: "under ₹300" and "under ₹500" overlap, so letting both be lit
+     would only ever mean the wider one. Clicking the lit band clears it. */
+  var priceRow = document.getElementById("priceRow");
+  PRICE_OPTS.forEach(function(o){
+    var b = document.createElement("button");
+    b.className = "dd-item"; b.type = "button";
+    b.setAttribute("data-price", o.k);
+    b.setAttribute("aria-pressed", "false");
+    b.innerHTML = o.label + '<span class="tick">✓</span>';
+    b.addEventListener("click", function(){
+      state.price = (state.price === o.k) ? "" : o.k;
+      syncPrice(); render();
+    });
+    priceRow.appendChild(b);
+  });
+  function syncPrice(){
+    Array.prototype.slice.call(priceRow.querySelectorAll("[data-price]")).forEach(function(b){
+      b.setAttribute("aria-pressed", String(state.price === b.getAttribute("data-price")));
+    });
+  }
+  syncPrice();
+
   /* ---------------- near me ----------------
      The radius buttons only appear once there is a location to measure from, because
      "Within 5 km" of nothing is a control that cannot do anything. */
@@ -2479,13 +2551,15 @@
     if (state.wknd)      on.push("Sat & Sun");
     setVal("valShow", on.length ? on.join(", ") : "All events", on.length > 0);
 
+    setVal("valPrice", state.price ? PRICEMAP[state.price].label : "Any price", !!state.price);
+
     var nearTxt = "Any distance";
     if (!origin) nearTxt = "Any distance";
     else if (state.near) nearTxt = "Within " + state.near + " km";
     else nearTxt = "Location set";
     setVal("valNear", nearTxt, !!state.near);
 
-    var dirty = state.areas.length || state.cats.length || state.near
+    var dirty = state.areas.length || state.cats.length || state.near || state.price
              || state.free || state.onlyNew || state.wknd || state.onlySaved || state.q;
     document.getElementById("clearBtn").classList.toggle("show", !!dirty);
   }
@@ -2495,7 +2569,8 @@
     /* clears the filters only - it must never wipe what you have saved */
     state.areas = []; state.cats = [];
     state.free = false; state.onlyNew = false; state.wknd = false;
-    state.onlySaved = false; state.q = ""; state.near = 0;
+    state.onlySaved = false; state.q = ""; state.near = 0; state.price = "";
+    syncPrice();
     /* clears the radius, keeps the location — same rule as Saves: Clear all is for
        filters, not for the things you told this browser about yourself */
     syncNear();
@@ -2521,6 +2596,7 @@
     if (state.free)      show.push("free");
     if (state.wknd)      show.push("wknd");
     if (show.length) p.push("show=" + show.join(","));
+    if (state.price) p.push("price=" + state.price);
     if (state.q)     p.push("q=" + encodeURIComponent(state.q));
     if (state.from !== DEF_FROM) p.push("from=" + state.from);
     if (state.to   !== DEF_TO)   p.push("to="   + state.to);
@@ -2540,7 +2616,7 @@
        an unrecognised key would leave the reader looking at someone else's board. */
     state.areas = []; state.cats = [];
     state.free = false; state.onlyNew = false; state.wknd = false; state.onlySaved = false;
-    state.q = ""; state.from = DEF_FROM; state.to = DEF_TO;
+    state.q = ""; state.price = ""; state.from = DEF_FROM; state.to = DEF_TO;
     if (!h) return false;
     var got = false;
     h.split("&").forEach(function(kv){
@@ -2557,6 +2633,10 @@
            renamed should degrade to the rest, not to an empty board */
         state.cats = v.split(",").filter(function(c){ return CATMAP[c]; });
         got = true;
+      }
+      else if (k === "price"){
+        /* a band that no longer exists degrades to no price filter, never an empty board */
+        if (PRICEMAP[v]) { state.price = v; got = true; }
       }
       else if (k === "show"){
         v.split(",").forEach(function(s){
@@ -2578,6 +2658,7 @@
   /* push whatever state we ended up with back onto the controls */
   function applyStateToUI(){
     syncMultiSelects();
+    syncPrice();
     document.getElementById("savedBtn").setAttribute("aria-pressed", String(state.onlySaved));
     document.getElementById("newBtn").setAttribute("aria-pressed",   String(state.onlyNew));
     document.getElementById("freeBtn").setAttribute("aria-pressed",  String(state.free));
