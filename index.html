@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex,nofollow">
 <meta name="description" content="Delhi Circle - where to be, every day of the week.">
 <meta name="theme-color" content="#fdf9f3">
-<meta name="build" content="20260808-190010-2667">
+<meta name="build" content="20260808-192245-1139">
 </head>
 <body><title>Delhi Circle</title>
 
@@ -509,6 +509,17 @@
         <div class="dd-menu" id="areaRow"></div>
       </div>
 
+      <div class="dd" id="ddNear">
+        <button class="dd-trigger" type="button" aria-expanded="false" aria-haspopup="true">
+          <span class="lbl">Near</span><span class="val" id="valNear">Any distance</span><span class="chev"></span>
+        </button>
+        <div class="dd-menu" id="nearRow">
+          <div class="dd-note" id="nearNote">Set where you are, and every card shows how far it is.</div>
+          <button class="dd-item" type="button" id="locBtn">Use my current location<span class="tick">✓</span></button>
+          <button class="dd-item" type="button" id="locClearBtn" hidden>Forget my location<span class="tick">✓</span></button>
+        </div>
+      </div>
+
       <div class="dd" id="ddWhat">
         <button class="dd-trigger" type="button" aria-expanded="false" aria-haspopup="true">
           <span class="lbl">What</span><span class="val" id="valWhat">Any type</span><span class="chev"></span>
@@ -836,6 +847,93 @@
     noida:    "Blue · Noida Sector 18",
     multi:    "varies — check the listing"
   };
+
+  /* ---------------- venue coordinates ----------------
+     GENERATED — do not hand-edit. Run tools\geocode.ps1 to resolve venues against
+     OpenStreetMap, then tools\inject-venues.ps1 to write the result in here.
+
+     Keyed by the same venue fragment mapQuery() builds, so the two stay in step.
+     Each value is [lat, lon, tier]:
+       tier 1  the venue itself resolved   — good to roughly 50 m
+       tier 2  only the locality resolved  — good to roughly 1 km
+     A venue that resolved to neither is absent, and its card shows no distance at all.
+     Nothing is guessed: a wrong distance stated confidently is worse than no distance. */
+  /* VENUES:BEGIN */
+  var VENUES = {
+    "38 Barracks, Connaught Place":[28.63293,77.22265,1],
+    "Agarwal Bhawan, Prashant Vihar, Rohini":[28.70631,77.10879,2],
+    "Ambassador New Delhi, IHCL SeleQtions":[28.60174,77.22885,1],
+    "Apparel House, Sector 44, Gurugram":[28.45071,77.07383,2],
+    "Auditorium, Ofis Square, Sector 62, Noida":[28.62114,77.36435,2],
+    "Barista Diner, Starling Mall, Noida":[28.54186,77.37024,2],
+    "Beyond Just Work, Sushant Lok Phase I, Sector 43, Gurugram":[28.45487,77.08589,2],
+    "Bharat Mandapam, Pragati Maidan":[28.61962,77.24243,1],
+    "Cafe 27, Kailash Colony Market":[28.55324,77.24258,2],
+    "Cafe Hawkers, Connaught Place":[28.63177,77.21938,2],
+    "Cocktails \u0026 Dreams Speakeasy, Sector 15, Gurugram":[28.38432,76.91223,2],
+    "Comedy Playground, Shahpur Jat":[28.54833,77.21410,2],
+    "Comic Garage, Connaught Place":[28.63177,77.21938,2],
+    "Conference Hall, YMCA Gate 5, Jai Singh Road":[28.62711,77.21521,2],
+    "Cyber City, Gurugram":[28.49807,77.08926,1],
+    "Cyber Hub, Gurugram":[28.49510,77.08851,1],
+    "Dargah Hazrat Nizamuddin Aulia, Nizamuddin West":[28.58837,77.24495,2],
+    "Depot48, Greater Kailash II":[28.53382,77.24247,2],
+    "Dr Ambedkar International Centre, Janpath":[28.61807,77.21881,2],
+    "Eldeco Centre, Saket":[28.52117,77.20222,2],
+    "Food Court, Pacific Mall, Tagore Garden":[28.64376,77.11285,2],
+    "Game On Board Cafe, Gurugram":[28.42484,77.06856,1],
+    "Hall 6, Bharat Mandapam":[28.61724,77.24346,2],
+    "Hemkunt Chamber, 89 Nehru Place":[28.54806,77.25336,2],
+    "Hideout Comedy Club, Hauz Khas Village":[28.55337,77.19485,2],
+    "Huda Gymkhana, Gurugram":[28.46678,77.06183,1],
+    "Jawaharlal Nehru Stadium":[28.58338,77.23354,1],
+    "Kamaladevi Complex, India International Centre, Lodhi Estate":[28.59524,77.22629,2],
+    "Kamani Auditorium, Copernicus Marg":[28.62319,77.23126,1],
+    "Kedarnath Sahni Auditorium, Civil Lines":[28.68069,77.22260,2],
+    "Le Méridien New Delhi, Janpath":[28.61807,77.21881,2],
+    "Light Room, Hauz Khas Village":[28.55337,77.19485,2],
+    "Little Theatre Group Auditorium, Copernicus Marg":[28.61919,77.23147,2],
+    "Lodhi Garden":[28.59630,77.22155,1],
+    "Lok Kala Manch, Lodhi Estate":[28.59524,77.22629,2],
+    "Masala \u0026 Mozzarella, MG Road, Gurugram":[28.47696,77.06627,2],
+    "Masters\u0027 Union campus, Sector 20, Udyog Vihar":[28.49173,77.08197,2],
+    "Monkey Bar, Vasant Kunj":[28.53653,77.14767,1],
+    "Museo Camera, Sector 28, Gurugram":[28.46947,77.08020,1],
+    "Plenary Hall, Bharat Mandapam":[28.61724,77.24346,2],
+    "Pragati Maidan":[28.61724,77.24346,1],
+    "Qavalli, Worldmark 1, Aerocity":[28.54799,77.12124,2],
+    "Ramada by Wyndham, Gurgaon Central":[28.47958,77.07575,2],
+    "Safdarjung Enclave":[28.56502,77.19256,1],
+    "Sector 18, Noida":[28.57054,77.32289,1],
+    "Shah Auditorium, Civil Lines":[28.68069,77.22260,2],
+    "ShellBeacon Cafe \u0026 Bar, Hauz Khas Village":[28.55337,77.19485,2],
+    "ShellBeacon Cafe, Hauz Khas Village":[28.55453,77.19477,1],
+    "Somewhere Restaurant \u0026 Bar, H-10 Connaught Place":[28.63177,77.21938,2],
+    "Somewhere Restaurant \u0026 Bar, Middle Circle, Connaught Place":[28.63177,77.21938,2],
+    "Sufiaana, Rajouri Garden":[28.65119,77.12426,2],
+    "Sukoon Coffee Cafe, Dwarka":[28.61494,77.02276,2],
+    "Summer House Café, Hauz Khas Village":[28.55226,77.20377,1],
+    "Talkatora Indoor Stadium":[28.62536,77.19535,1],
+    "Talkatora Stadium":[28.62113,77.19364,1],
+    "The Comedy Theatre, Gurugram":[28.44321,77.10061,1],
+    "The Laugh Circuit, Hauz Khas":[28.54981,77.20776,2],
+    "The Laugh Store, DLF Cyber City, Sector 24, Gurugram":[28.49448,77.10130,2],
+    "The Laugh Store, DLF Cyber Hub, Gurugram":[28.49400,77.08909,1],
+    "The Piano Man Jazz Club, Safdarjung Enclave":[28.56502,77.19256,2],
+    "Themis Barbecue House, Connaught Place":[28.63177,77.21938,2],
+    "Tivoli Garden Resort Hotel":[28.49637,77.18617,1],
+    "TOT Studio, South Delhi":[28.49926,77.17436,2],
+    "Urban Akhara, Sector 58, Gurugram":[28.41600,77.10856,2],
+    "Vegas Mall, Dwarka":[28.60108,77.02960,1],
+    "Wave Silver Tower, Sector 18, Noida":[28.57190,77.32448,1],
+    "Yamuna Sports Complex":[28.66296,77.31173,1],
+    "Yashobhoomi Convention Centre, Dwarka":[28.55195,77.04268,1],
+    "Yashobhoomi IICC, Dwarka":[28.55083,77.04531,1],
+    "Zone Connect by The Park, Saket":[28.52117,77.20222,2],
+    "Zorba The Buddha, Ghitorni":[28.49312,77.14249,2],
+    "Zuvaah Terrace Bar \u0026 Kitchen, Golf Course Extension, Gurugram":[28.39438,77.03236,2]
+  };
+  /* VENUES:END */
 
   var DAYNAMES = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
   var DAYNOTE = {
@@ -1859,7 +1957,15 @@
   /* areas and cats are lists, not single values - "Gurugram or Noida" and "board games
      AND startup" are both normal things to want to ask for. Empty list = no filter. */
   var state = {areas:[], cats:[], free:false, onlyNew:false, wknd:false,
-               onlySaved:false, q:"", from:DEF_FROM, to:DEF_TO};
+               onlySaved:false, q:"", near:0, from:DEF_FROM, to:DEF_TO};
+
+  /* Radii, not travel times. 3 km is "walk or one short auto", 20 km is "most of NCR". */
+  var NEAR_OPTS = [
+    {km:3,  label:"Within 3 km"},
+    {km:5,  label:"Within 5 km"},
+    {km:10, label:"Within 10 km"},
+    {km:20, label:"Within 20 km"}
+  ];
 
   function inRange(e, dows){
     if (e.date) return e.date >= state.from && e.date <= state.to;
@@ -1874,6 +1980,12 @@
     if (state.wknd){
       var day = e.date ? d(e.date).getDay() : e.dow;
       if (day !== 0 && day !== 6) return false;
+    }
+    if (state.near && origin){
+      var km = distanceKm(e);
+      /* A venue with no coordinates cannot honestly claim to be within the radius, so
+         it drops out rather than being assumed near. */
+      if (km === null || km > state.near) return false;
     }
     if (state.q){
       var hay = (e.name+" "+e.where+" "+e.note+" "+e.when+" "
@@ -1900,11 +2012,67 @@
      Sending those to Maps drops the reader at a city centre and quietly pretends that
      is the venue — worse than offering nothing. Those cards get no Directions link. */
   var UNROUTABLE = /^(new\s+)?delhi(\s+ncr)?$|^(south|north|west|east)\s+delhi$|^gurugram$|^gurgaon$|^noida$|^ghaziabad$|^faridabad$|^ncr$|varies|venue shared|venue on|to be announced|rotating|multiple venues|across the city|tombs, gardens/i;
-  function mapQuery(e){
+  /* One fragment rule, used by both the Directions link and the coordinate lookup, so a
+     venue can never be routable for one and unknown to the other. tools\geocode.ps1
+     carries the same rule — change it in both places or distances go missing. */
+  function venueFragment(e){
     var q = String(e.where || "").split(/\s+[\/·]\s+|\s+—\s+/)[0].trim();
-    if (!q || UNROUTABLE.test(q)) return "";
+    return (!q || UNROUTABLE.test(q)) ? "" : q;
+  }
+  function mapQuery(e){
+    var q = venueFragment(e);
+    if (!q) return "";
     if (!CITY_WORDS.test(q)) q += ", Delhi NCR";
     return "https://www.google.com/maps/dir/?api=1&destination=" + encodeURIComponent(q);
+  }
+
+  /* ---------------- how far away it is ----------------
+     Straight-line distance from wherever the reader says they are. This is NOT drive
+     time: Delhi roads run roughly 1.3–1.5x the crow-flies distance, and traffic does
+     the rest. It is shown as an approximation and never dressed up as a travel time —
+     the Directions link exists for the real answer.
+
+     The reader's position is asked for once, kept in this browser's localStorage and
+     sent nowhere. There is no server to send it to. */
+  var ORIGIN_KEY = "delhiCircle.origin.v1";
+  var origin = null;                    // {lat, lon, label}
+
+  function readOrigin(){
+    try {
+      var o = JSON.parse(localStorage.getItem(ORIGIN_KEY) || "null");
+      return (o && isFinite(o.lat) && isFinite(o.lon)) ? o : null;
+    } catch (err) { return null; }
+  }
+  function writeOrigin(o){
+    try {
+      if (o) localStorage.setItem(ORIGIN_KEY, JSON.stringify(o));
+      else localStorage.removeItem(ORIGIN_KEY);
+    } catch (err) {}
+  }
+
+  function haversine(aLat, aLon, bLat, bLon){
+    var R = 6371, rad = Math.PI / 180;
+    var dLat = (bLat - aLat) * rad, dLon = (bLon - aLon) * rad;
+    var s = Math.sin(dLat/2) * Math.sin(dLat/2)
+          + Math.cos(aLat*rad) * Math.cos(bLat*rad) * Math.sin(dLon/2) * Math.sin(dLon/2);
+    return 2 * R * Math.asin(Math.min(1, Math.sqrt(s)));
+  }
+
+  /* km from the reader, or null when either end is unknown */
+  function distanceKm(e){
+    if (!origin) return null;
+    var v = VENUES[venueFragment(e)];
+    if (!v) return null;
+    return haversine(origin.lat, origin.lon, v[0], v[1]);
+  }
+  /* Tier 2 venues are only located to their neighbourhood, so a tenth of a kilometre
+     would be false precision — those round to whole kilometres and keep the "about". */
+  function distanceLabel(e){
+    var km = distanceKm(e);
+    if (km === null) return "";
+    var tier = (VENUES[venueFragment(e)] || [])[2];
+    if (tier === 1) return (km < 10 ? km.toFixed(1) : Math.round(km)) + " km away";
+    return "about " + Math.max(1, Math.round(km)) + " km away";
   }
 
   function cardHTML(e){
@@ -1913,9 +2081,11 @@
     var sv = isSaved(e);
     var area = AREAMAP[e.a]
       ? '<span class="tag">' + AREAMAP[e.a].label + '</span>' : '';
+    var far = distanceLabel(e);
     var metro = ''
       + '<div class="metro">'
       +   '<span><i>metro</i> <b>' + (e.mt || METRO[e.a] || "—") + '</b></span>'
+      +   (far ? '<span><i>distance</i> <b>' + far + '</b></span>' : '')
       + '</div>';
     return ''
       + '<article class="card" style="--tone:var(' + c.tone + ')">'
@@ -2107,6 +2277,67 @@
   toggle("wkndBtn","wknd");
   toggle("savedBtn","onlySaved");
 
+  /* ---------------- near me ----------------
+     The radius buttons only appear once there is a location to measure from, because
+     "Within 5 km" of nothing is a control that cannot do anything. */
+  var nearRow     = document.getElementById("nearRow");
+  var nearNote    = document.getElementById("nearNote");
+  var locBtn      = document.getElementById("locBtn");
+  var locClearBtn = document.getElementById("locClearBtn");
+
+  NEAR_OPTS.forEach(function(o){
+    var b = document.createElement("button");
+    b.className = "dd-item"; b.type = "button";
+    b.setAttribute("data-km", String(o.km));
+    b.setAttribute("aria-pressed", "false");
+    b.innerHTML = o.label + '<span class="tick">✓</span>';
+    b.addEventListener("click", function(){
+      state.near = (state.near === o.km) ? 0 : o.km;   // clicking the lit one clears it
+      syncNear(); render();
+    });
+    nearRow.insertBefore(b, locBtn);
+  });
+
+  function syncNear(){
+    var have = !!origin;
+    Array.prototype.slice.call(nearRow.querySelectorAll("[data-km]")).forEach(function(b){
+      b.hidden = !have;
+      b.setAttribute("aria-pressed", String(have && state.near === Number(b.getAttribute("data-km"))));
+    });
+    locBtn.hidden = have;
+    locClearBtn.hidden = !have;
+    nearNote.textContent = have
+      ? "Straight-line distance from where you are — not drive time. Tap Directions for that."
+      : "Set where you are, and every card shows how far it is.";
+  }
+
+  locBtn.addEventListener("click", function(){
+    if (!navigator.geolocation){
+      nearNote.textContent = "This browser will not share a location.";
+      return;
+    }
+    nearNote.textContent = "Asking your browser…";
+    navigator.geolocation.getCurrentPosition(function(pos){
+      origin = {lat:pos.coords.latitude, lon:pos.coords.longitude, label:"current location"};
+      writeOrigin(origin);
+      syncNear(); render();
+    }, function(err){
+      /* denial is a legitimate answer, so say what happened and leave the board alone */
+      nearNote.textContent = (err && err.code === 1)
+        ? "Location permission was declined. The board works fine without it."
+        : "Could not get a location just now.";
+    }, {enableHighAccuracy:false, timeout:12000, maximumAge:600000});
+  });
+
+  locClearBtn.addEventListener("click", function(){
+    origin = null; state.near = 0;
+    writeOrigin(null);
+    syncNear(); render();
+  });
+
+  origin = readOrigin();
+  syncNear();
+
   var from = document.getElementById("from"), to = document.getElementById("to");
   function onDate(){
     if (from.value) state.from = from.value;
@@ -2248,7 +2479,13 @@
     if (state.wknd)      on.push("Sat & Sun");
     setVal("valShow", on.length ? on.join(", ") : "All events", on.length > 0);
 
-    var dirty = state.areas.length || state.cats.length
+    var nearTxt = "Any distance";
+    if (!origin) nearTxt = "Any distance";
+    else if (state.near) nearTxt = "Within " + state.near + " km";
+    else nearTxt = "Location set";
+    setVal("valNear", nearTxt, !!state.near);
+
+    var dirty = state.areas.length || state.cats.length || state.near
              || state.free || state.onlyNew || state.wknd || state.onlySaved || state.q;
     document.getElementById("clearBtn").classList.toggle("show", !!dirty);
   }
@@ -2258,7 +2495,10 @@
     /* clears the filters only - it must never wipe what you have saved */
     state.areas = []; state.cats = [];
     state.free = false; state.onlyNew = false; state.wknd = false;
-    state.onlySaved = false; state.q = "";
+    state.onlySaved = false; state.q = ""; state.near = 0;
+    /* clears the radius, keeps the location — same rule as Saves: Clear all is for
+       filters, not for the things you told this browser about yourself */
+    syncNear();
     q.value = "";
     syncMultiSelects();
     ["newBtn","freeBtn","wkndBtn","savedBtn"].forEach(function(id){
