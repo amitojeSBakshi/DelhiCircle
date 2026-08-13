@@ -1,6 +1,15 @@
-# This directory is PUBLIC. It holds index.html, .gitignore and .nojekyll only.
+# This directory is PUBLIC. Everything is ignored by default and allowed one file at a
+# time, so a stray note can never be published by accident.
 # Never commit the refresh rules, source lists, methodology notes or any personal document here.
 *
 !index.html
 !.nojekyll
 !.gitignore
+
+# Home-screen install (see publish.ps1 and tools\make-icons.ps1). These are generated,
+# contain nothing private, and must be served or the board stops installing as an app.
+!manifest.json
+!sw.js
+!icon-192.png
+!icon-512.png
+!apple-touch-icon.png
