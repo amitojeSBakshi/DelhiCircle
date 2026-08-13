@@ -2,15 +2,22 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Delhi Circle</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
 <meta name="description" content="Delhi Circle - where to be, every day of the week.">
-<meta name="theme-color" content="#fdf9f3">
-<meta name="build" content="20260813-035859-7593">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#fdf9f3">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#17130f">
+<meta name="build" content="20260813-132433-6163">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Delhi Circle">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="mobile-web-app-capable" content="yes">
 </head>
-<body><title>Delhi Circle</title>
-
-<style>
+<body><style>
   :root{
     --ink:#231d17; --ink-2:#4f453a; --ink-3:#7d7164; --ink-4:#a99c8c;
     --paper:#fdf9f3; --card:#fffefb; --line:#e6dccd; --line-2:#f1e9dc;
@@ -2851,5 +2858,12 @@
 })();
 </script>
 
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", function(){
+    navigator.serviceWorker.register("sw.js").catch(function(){});
+  });
+}
+</script>
 </body>
 </html>
