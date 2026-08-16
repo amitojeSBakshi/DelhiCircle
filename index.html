@@ -8,7 +8,7 @@
 <meta name="description" content="Delhi Circle - where to be, every day of the week.">
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fdf9f3">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#17130f">
-<meta name="build" content="20260816-194800-9808">
+<meta name="build" content="20260816-201906-9459">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
@@ -598,12 +598,11 @@
       </a>
     </div>
     <h1>Delhi Circle<span class="dot">.</span></h1>
-    <p class="subline">Delhi, Gurgaon &amp; Noida — what's happening around you.</p>
+    <p class="subline">Delhi doesn't wait. Neither should you.</p>
     <p class="tally"><b id="tCount">—</b> events found<i>·</i><b
       id="tWknd">—</b> on Sat &amp; Sun<i>·</i><b id="tCat">—</b> categories<span id="tSavedWrap" style="display:none"><i>·</i><b
       id="tSaved" class="hot">—</b> saved</span><span style="display:none"><b id="tFree">—</b><b id="tNew" class="hot">—</b></span></p>
     <p class="byline">Managed by <b>Amitoje Singh Bakshi</b></p>
-    <p class="byline byline-2"><a href="tel:+918287028821">+91 82870 28821</a><i>·</i><span id="swept"></span></p>
     <div class="perf"></div>
     <nav class="tabs" id="tabs" role="tablist" aria-label="Sections">
       <button class="tab" type="button" role="tab" data-view="week"        aria-selected="true">The week</button>
@@ -939,7 +938,7 @@
   <footer>
     <p>Every card carries the nearest Metro line and station. That is the closest station to the venue's area rather than a door-to-door route — Hauz Khas Village is a genuine walk from Hauz Khas station, and most Gurugram venues off the Yellow Line still need an auto at the end. Confirm price and timing on the linked page before you travel; small venues change schedules constantly, and Delhi's listing platforms rarely publish more than one to two weeks ahead. Where a night is listed as recurring without a date, it is a standing weekly slot — check the group or venue before setting off.</p>
     <p>Anything you <b style="font-style:normal;color:var(--ink-2)">Save</b> is stored in this browser on this device only. There is no account and no server behind this page, so your saved list is yours alone — it is not visible to whoever shared this link with you, and it will not follow you to another phone or laptop. Clearing your browser data clears it.</p>
-    <p>Put together and kept current by <b style="font-style:normal;color:var(--ink-2)">Amitoje Singh Bakshi</b> — <a href="tel:+918287028821" style="font-style:normal;font-weight:700;white-space:nowrap">+91 82870 28821</a>. If something here has moved, closed or is worth adding, tell me and it goes in on the next refresh.</p>
+    <p>Put together and kept current by <b style="font-style:normal;color:var(--ink-2)">Amitoje Singh Bakshi</b>. If something here has moved, closed or is worth adding, tell me and it goes in on the next refresh.</p>
   </footer>
 </div>
 
@@ -3192,15 +3191,6 @@
   });
 
   /* ---------------- boot ---------------- */
-  /* How fresh is this board? Says so plainly, and admits it when it has been a while -
-     a shared link with no date on it gives a reader no way to judge it. */
-  (function(){
-    var age = daysBetween(TODAY, NOW);
-    var txt = "last updated " + fmtAdded(TODAY);
-    if (age >= 14) txt += " — " + Math.floor(age / 7) + " weeks ago";
-    document.getElementById("swept").textContent = txt;
-  })();
-
   readHash();          // a shared link wins over the defaults
   applyStateToUI();    // then the controls are made to match whatever we ended up with
   render();
