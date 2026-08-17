@@ -8,7 +8,7 @@
 <meta name="description" content="Delhi Circle - where to be, every day of the week.">
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fdf9f3">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#17130f">
-<meta name="build" content="20260816-201906-9459">
+<meta name="build" content="20260817-164248-633">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
@@ -953,7 +953,7 @@
      NOW (below, once iso() exists) is the reader's real date, and it decides what is
      still ahead of them. That is what stops a link shared in July from still offering
      you a 29 July show in September. */
-  var TODAY = "2026-08-15";      // refresh marker — bump on every update
+  var TODAY = "2026-08-17";      // refresh marker — bump on every update
   var BASELINE = "2026-07-27";   // initial load; entries from this date are not "new"
   var NEW_WINDOW_DAYS = 3;       // "NEW" badge lifetime after that
 
@@ -2289,7 +2289,161 @@
      when:"Sat 22 Aug · 8:00 PM", where:"TOT Studio, Lajpat Nagar",
      mt:"Violet + Pink · Lajpat Nagar",
      note:"A stand-up set at a small Lajpat Nagar studio venue that runs comedy nights regularly.",
-     cost:"₹399", url:"https://www.district.in/events/pravit-arora-live-aug22-2026-buy-tickets", added:"2026-08-15"}
+     cost:"₹399", url:"https://www.district.in/events/pravit-arora-live-aug22-2026-buy-tickets", added:"2026-08-15"},
+
+    /* ================= IHC — August weeknights, second sweep =================
+       The month's programme card shows a full set of Dance/Music/Theatre weeknight
+       bookings not caught in the first sweep — all 7:00 PM, all first-come in the
+       Stein, Theatre and Gulmohar halls. Same convention as the earlier IHC block:
+       programmes are open to the public without tickets, so nothing is marked Free. */
+    {date:"2026-08-18", a:"cp", cat:"dance", name:"Spandana",
+     when:"Tue 18 Aug · 7:00 PM", where:"The Stein Auditorium, India Habitat Centre, Lodhi Road",
+     mt:"Yellow · Jor Bagh",
+     note:"A contemporary dance evening in Habitat's main auditorium on a Tuesday. Sits right at the start of the week's thin stretch, and the campus is a five-minute walk from IIC if you want a full evening.",
+     cost:"Not ticketed", url:"https://www.indiahabitat.org/Events_details/1349", added:"2026-08-17"},
+
+    {date:"2026-08-19", a:"cp", cat:"dance", name:"Sargun se Nirgun: Kabir in Motion",
+     when:"Wed 19 Aug · 7:00 PM", where:"The Stein Auditorium, India Habitat Centre, Lodhi Road",
+     mt:"Yellow · Jor Bagh",
+     note:"Kabir's poetry staged as movement, in the same auditorium that holds Spandana the night before. A Wednesday slot, which is the thinnest night on this board.",
+     cost:"Not ticketed", url:"https://www.indiahabitat.org/Events_details/1352", added:"2026-08-17"},
+
+    {date:"2026-08-21", a:"cp", cat:"music", name:"21st Pandit Siyaram Tiwari Music Festival",
+     when:"Fri 21 Aug · 7:00 PM", where:"The Theatre, India Habitat Centre, Lodhi Road",
+     mt:"Yellow · Jor Bagh",
+     note:"A Hindustani classical evening in the smaller Theatre hall, in the festival's 21st year. Habitat's Friday crowd is the reason to go even before the artists are named.",
+     cost:"Not ticketed", url:"https://www.indiahabitat.org/Events_details/1353", added:"2026-08-17"},
+
+    {date:"2026-08-22", a:"cp", cat:"stage", name:"Dalla Ayaara",
+     when:"Sat 22 Aug · 7:00 PM", where:"The Stein Auditorium, India Habitat Centre, Lodhi Road",
+     mt:"Yellow · Jor Bagh",
+     note:"A theatre production on the Saturday night Habitat's calendar had the fullest. Pairs with the music and talk running in other halls on the same campus that evening.",
+     cost:"Not ticketed", url:"https://www.indiahabitat.org/Events_details/1358", added:"2026-08-17"},
+
+    {date:"2026-08-23", a:"cp", cat:"stage", name:"Dastan-e-Raahi",
+     when:"Sun 23 Aug · 7:00 PM", where:"The Stein Auditorium, India Habitat Centre, Lodhi Road",
+     mt:"Yellow · Jor Bagh",
+     note:"A dastangoi storytelling performance, a format that is almost entirely about how the performer holds a room. A quieter, older-room alternative to the comedy circuit on the same night.",
+     cost:"Not ticketed", url:"https://www.indiahabitat.org/Events_details/1359", added:"2026-08-17"},
+
+    {date:"2026-08-30", a:"cp", cat:"music", name:"Vande Mataram: Bharat Vandan",
+     when:"Sun 30 Aug · 7:00 PM", where:"The Theatre, India Habitat Centre, Lodhi Road",
+     mt:"Yellow · Jor Bagh",
+     note:"A patriotic-music concert closing out Habitat's August programme card. A Sunday evening that starts at seven and stays inside, so the week survives it.",
+     cost:"Not ticketed", url:"https://www.indiahabitat.org/Events_details/1370", added:"2026-08-17"},
+
+    /* ================= IIC — late-August weeknight programme ================= */
+    {date:"2026-08-24", a:"cp", cat:"books", name:"Book Discussion Group — Design Your Thinking",
+     when:"Mon 24 Aug · 6:00 PM", where:"Lecture Room II, India International Centre Annexe, Lodhi Estate",
+     mt:"Yellow · Jor Bagh",
+     note:"IIC's book discussion group on a design-thinking title, in the small Annexe room where everyone speaks. Monday at six is the emptiest slot on this board and the easiest to walk into.",
+     cost:"Not ticketed", url:"https://iicdelhi.in/programmes/book-discussion-group-design-your-thinking", added:"2026-08-17"},
+
+    {date:"2026-08-25", a:"cp", cat:"stage", name:"FIPRESCI–IIC — In the Name of Fire: Swaha",
+     when:"Tue 25 Aug · 6:30 PM", where:"C.D. Deshmukh Auditorium, India International Centre, Lodhi Estate",
+     mt:"Yellow · Jor Bagh",
+     note:"The next film in the FIPRESCI–IIC showcase of contemporary Indian cinema, in the main auditorium. Film-club crowds are the easiest kind to speak to afterwards.",
+     cost:"Not ticketed", url:"https://iicdelhi.in/programmes/fipresci-iic-showcase-stories-contemporary-india-ii-film-name-fire-swaha", added:"2026-08-17"},
+
+    {date:"2026-08-27", a:"cp", cat:"books", name:"Book Discussion Group — Migrants and Other Poems",
+     when:"Thu 27 Aug · 6:00 PM", where:"Conference Room II, India International Centre, Lodhi Estate",
+     mt:"Yellow · Jor Bagh",
+     note:"A poetry collection on loss, migration and displacement discussed in conference-room format. Follows the same evening's poetry talk at Habitat — the two venues are ten minutes apart.",
+     cost:"Not ticketed", url:"https://iicdelhi.in/programmes/book-discussion-group-migrants-and-other-poems-collection-reflective-poetry-loss", added:"2026-08-17"},
+
+    /* ================= MUSEO CAMERA — August book programme ================= */
+    {date:"2026-08-22", a:"gurgaon", cat:"books", name:"The Rivalry — Author Interview",
+     when:"Sat 22 Aug · 6:00–7:15 PM", where:"Museo Camera, Sector 28, Gurugram",
+     mt:"Yellow · IFFCO Chowk",
+     note:"An author-interview evening in the photography museum that also runs two other events the same day. Free and drop-in, so it costs nothing to see whether this is your crowd.",
+     cost:"Free, just drop in", free:true, url:"https://www.museocamera.org/event/the-rivalry-an-author-interview", added:"2026-08-17"},
+
+    {date:"2026-08-22", a:"gurgaon", cat:"books", name:"Silent Book Club at Museo",
+     when:"Sat 22 Aug · 11:00 AM–1:00 PM", where:"Museo Camera, Sector 28, Gurugram",
+     mt:"Yellow · IFFCO Chowk",
+     note:"The museum's standing silent-reading gathering — read your own book beside a room of strangers for an hour. The gentlest possible way to be in a room with people, and it stacks before the afternoon's other Museo events.",
+     cost:"Free, just drop in", free:true, url:"https://www.museocamera.org/event/silent-book-club17", added:"2026-08-17"},
+
+    {date:"2026-08-30", a:"gurgaon", cat:"books", name:"James — A Book Discussion",
+     when:"Sun 30 Aug · 12:30–1:30 PM", where:"Museo Camera, Sector 28, Gurugram",
+     mt:"Yellow · IFFCO Chowk",
+     note:"The museum's fortnightly book-discussion slot, on an hour-long lunchtime schedule. Small room, everyone speaks, and it frees the rest of the Sunday.",
+     cost:"Free, just drop in", free:true, url:"https://www.museocamera.org/event/james-a-book-discussion", added:"2026-08-17"},
+
+    {date:"2026-08-27", a:"gurgaon", cat:"speak", name:"Celebrating Sanskrit Divas",
+     when:"Thu 27 Aug · 4:30–6:30 PM", where:"Museo Camera, Sector 28, Gurugram",
+     mt:"Yellow · IFFCO Chowk",
+     note:"A Sanskrit Day talk-and-reading in the museum's programme hall, free but registration-gated through a Google Form. A weekday afternoon in Gurugram that starts before the evening rush.",
+     cost:"Free, just drop in", free:true, url:"https://www.museocamera.org/event/celebrating-sanskrit-divas", added:"2026-08-17"},
+
+    /* ================= PUB QUIZZES — the thin Tuesday/Wednesday game nights ================= */
+    {date:"2026-08-18", a:"southdel", cat:"games", name:"Mutiny x Effingut Saket Pub Quiz",
+     when:"Tue 18 Aug · evening", where:"Effingut Brewpub, Saket",
+     mt:"Yellow + Magenta · Saket",
+     note:"A quizmaster-run pub quiz at ₹100 — cheaper than the metro fare there. Tuesday is the deadest night on this board, and a brewpub quiz is the most social way to fill it.",
+     cost:"₹100", url:"https://www.district.in/events/mutiny-x-effingut-saket-pub-quiz-aug4-2026-buy-tickets", added:"2026-08-17"},
+
+    {date:"2026-08-18", a:"gurgaon", cat:"games", name:"Mutiny x Effingut Gurugram Pub Quiz",
+     when:"Tue 18 Aug · evening", where:"Effingut Brewpub, Gurugram",
+     note:"The Gurugram run of the same Tuesday pub quiz, at the brewpub's original outpost. Teams form on the night, so turning up alone is the normal way to attend.",
+     cost:"₹100", url:"https://www.district.in/events/mutiny-x-effingut-gurugram-pub-quiz-aug4-2026-buy-tickets", added:"2026-08-17"},
+
+    {date:"2026-08-26", a:"westdel", cat:"games", name:"Cinema Quiz by Calm Your Wits Quizzing",
+     when:"Wed 26 Aug · evening", where:"Vasant Kunj Social, Ambience Mall",
+     mt:"Magenta · Vasant Vihar",
+     note:"A film-themed quiz from a dedicated quizzing collective, in the Vasant Kunj branch of Social. A Wednesday-night games option that stays inside the mall's metro reach.",
+     cost:"₹199", url:"https://www.district.in/events/cinema-quiz-by-calm-your-wits-quizzing-aug26-2026-buy-tickets", added:"2026-08-17"},
+
+    {date:"2026-08-20", a:"gurgaon", cat:"games", name:"Brooklyn Nine-Nine & the Office Quiz",
+     when:"Thu 20 Aug · 7:30 PM", where:"Unlocked, 32nd Avenue, Gurugram",
+     note:"A sitcom quiz covering two shows everyone here has binge-watched, at the escape-room bar that also runs the Sunday D&D campaign. ₹150 for a Thursday night in Gurugram is close to free.",
+     cost:"₹150", url:"https://allevents.in/gurugram/brooklyn-nine-nine-and-the-office-quiz/4100030551772814", added:"2026-08-17"},
+
+    {date:"2026-08-30", a:"gurgaon", cat:"games", name:"Murder Mystery Night — Unlocked",
+     when:"Sun 30 Aug · evening", where:"Unlocked — Bar, Kitchen, Escape Room, 32nd Avenue, Gurugram",
+     note:"A live murder-mystery evening in a venue built around escape rooms, so the sets are already there. The three-hour format keeps one table together long enough that people actually talk.",
+     cost:"₹750", url:"https://www.district.in/events/murder-mystery-night-unlocked-aug30-2026-buy-tickets", added:"2026-08-17"},
+
+    {dow:6, a:"gurgaon", cat:"games", name:"Trivia Night — Tim Hortons, Gurugram",
+     when:"Every Saturday · evening", where:"Tim Hortons, Gurugram — outlet on the listing",
+     note:"A standing Saturday trivia night at a coffee chain, which keeps the stakes low and the turnout consistent. Useful as the Gurugram answer to the ShellBeacon trivia already on this board.",
+     cost:"₹199", url:"https://www.district.in/events/trivia-night-delhi-ncr-jun13-2026-buy-tickets", added:"2026-08-17"},
+
+    /* ================= COMEDY — named duo shows, midweek ================= */
+    {date:"2026-08-18", a:"gurgaon", cat:"stage", name:"The Duo ft. Gaurav Kapoor & Anubhav Singh Bassi",
+     when:"Tue 18 Aug · 7:00 PM", where:"The Laugh Store, DLF Cyber Hub, Gurugram",
+     note:"Two of the bigger touring comics sharing one Cyber Hub room on a Tuesday. A named double-bill is a step up from the club's usual open-mic midweek.",
+     cost:"Ticketed", url:"https://allevents.in/new-delhi/the-duo-ft-gaurav-kapoor-and-anubhav-singh-bassi/3900030506528814", added:"2026-08-17"},
+
+    /* ================= NOIDA — AI, open mics, founder rooms ================= */
+    {date:"2026-08-22", a:"noida", cat:"ai", name:"How Founders Use AI — Noida Edition",
+     when:"Sat 22 Aug · 11:00 AM–1:00 PM", where:"DevX, Noida",
+     note:"The eChai network's recurring AI-for-founders session, free and at the same Noida hub as its Saturday meetups. Founders talking about what they actually run on AI beats any vendor demo.",
+     cost:"Free", free:true, url:"https://echai.ventures/events/how-founders-use-ai-noida-edition-aug-22-2026", added:"2026-08-17"},
+
+    {date:"2026-09-26", a:"noida", cat:"startup", name:"eChai Startup Demo Day in Delhi-NCR",
+     when:"Sat 26 Sep · 11:00 AM–1:00 PM", where:"DevX, Noida",
+     note:"The quarterly demo day of the region's biggest startup network, with 61 founders already registered. The one eChai session where startups actually present rather than network.",
+     cost:"Free", free:true, url:"https://echai.ventures/events/echai-startup-demo-day-in-delhi-ncr-sep-26-2026", added:"2026-08-17"},
+
+    {date:"2026-08-23", a:"noida", cat:"stage", name:"Nifraam Open Mic",
+     when:"Sun 23 Aug · 6:30 PM", where:"Cafe Nifraam, Sector 144, Noida",
+     mt:"Aqua · Sector 144",
+     note:"An open mic in a Noida cafe that runs at ₹149 — about the cheapest stage in NCR. Sector 144 is its own Aqua Line stop, which removes the usual Noida distance problem.",
+     cost:"₹149", url:"https://allevents.in/noida/nifraam-open-mic/4100030555783520", added:"2026-08-17"},
+
+    /* ================= SOUTH DELHI — social, plus Thursday's trade halls ================= */
+    {date:"2026-08-22", a:"southdel", cat:"social", name:"Strangers Meetup — Delhi",
+     when:"Sat 22 Aug · 6:00 PM", where:"ShellBeacon Cafe & Bar, Hauz Khas Village",
+     mt:"Magenta · IIT Delhi",
+     note:"A structured meetup built for people arriving alone, at the same Hauz Khas cafe that runs the board-games night. ₹199 and an evening with a room that is there for the talking.",
+     cost:"₹199", url:"https://allevents.in/new-delhi/strangers-meetup-delhi/4100030564697858", added:"2026-08-17"},
+
+    {date:"2026-08-20", a:"cp", cat:"expo", name:"Sport India Expo 2026 — 13th Edition",
+     when:"Thu 20 Aug · 10:00 AM", where:"Pragati Maidan",
+     mt:"Blue · Supreme Court",
+     note:"The international sporting-goods trade show, back at Pragati Maidan for its 13th year. A hall of sports-industry professionals on a Thursday — the thinnest evening on this board.",
+     cost:"Ticketed", url:"https://allevents.in/new-delhi/sport-india-expo-2026-13th-india-international-sporting-goods-show/200029976446812", added:"2026-08-17"}
   ];
 
   var CLASSES = [
