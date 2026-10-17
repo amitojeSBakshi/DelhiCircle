@@ -1,5 +1,5 @@
-﻿/* Delhi Circle - build 20261012-164141-3681 */
-var CACHE = "delhi-circle-20261012-164141-3681";
+﻿/* Delhi Circle - build 20261017-064344-1286 */
+var CACHE = "delhi-circle-20261017-064344-1286";
 var ASSETS = ["./", "./index.html", "./manifest.json",
               "./icon-192.png", "./icon-512.png", "./apple-touch-icon.png"];
 
